@@ -1,0 +1,45 @@
+<div class="d-flex flex-column h-100 justify-content-center px-2">
+  <h2 class="fw-bold text-uppercase border-bottom border-dark pb-2 mb-4">
+    Inicio de sesión
+  </h2>
+  <form>
+    <div class="mb-3">
+      <label for="login-username" class="form-label fw-semibold">Usuario</label>
+      <input
+        id="login-username"
+        type="text"
+        class="form-control"
+        placeholder="Nombre de usuario..."
+      />
+    </div>
+
+    <div class="mb-1">
+      <label for="login-password" class="form-label fw-semibold">Contraseña</label>
+      <input
+        id="login-password"
+        type="password"
+        class="form-control"
+        placeholder="Contraseña..."
+      />
+    </div>
+
+    <div class="mb-4">
+      <a routerLink="/auth/register" class="text-dark text-decoration-underline small">
+        Registrarse
+      </a>
+    </div>
+
+    <div class="d-grid mb-2">
+      <button type="submit" class="btn btn-outline-dark fw-bold text-uppercase py-2">
+        Iniciar sesión
+      </button>
+    </div>
+    
+    <div class="text-center">
+      <a routerLink="/home" class="text-dark text-decoration-underline small">
+        Continuar sin iniciar sesión
+      </a>
+    </div>
+
+  </form>
+</div>
