@@ -2,14 +2,18 @@
   <h2 class="fw-bold text-uppercase border-bottom border-dark pb-2 mb-4">
     Inicio de sesión
   </h2>
-  <form>
+  <form
+  [formGroup] = "loginForm"
+  (ngSubmit)="onSubmit()"
+  >
     <div class="mb-3">
-      <label for="login-username" class="form-label fw-semibold">Usuario</label>
+      <label for="login-username" class="form-label fw-semibold">Correo</label>
       <input
         id="login-username"
         type="text"
         class="form-control"
         placeholder="Nombre de usuario..."
+        formControlName="email"
       />
     </div>
 
@@ -20,6 +24,7 @@
         type="password"
         class="form-control"
         placeholder="Contraseña..."
+        formControlName="password"
       />
     </div>
 
@@ -34,12 +39,16 @@
         Iniciar sesión
       </button>
     </div>
-    
+
     <div class="text-center">
       <a routerLink="/home" class="text-dark text-decoration-underline small">
         Continuar sin iniciar sesión
       </a>
     </div>
-
+    @if(hasError()){
+      <div class="alert alert-danger py-2 my-2 text-center" role="alert">
+        Usuario o contraseña incorrectos
+      </div>
+    }
   </form>
 </div>

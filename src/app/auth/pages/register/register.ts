@@ -7,4 +7,4 @@ import { RouterLink } from '@angular/router';
   templateUrl: './register.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Register { }
+export class RegisterComponent { }
