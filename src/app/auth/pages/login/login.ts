@@ -31,7 +31,7 @@ export class LoginComponent {
       this.hasError.set(true);
       return;
     }
-    // Ocultamos el error local genérico al hacer la petición
+    
     this.hasError.set(false);
 
     const {email, password} = this.loginForm.value;
