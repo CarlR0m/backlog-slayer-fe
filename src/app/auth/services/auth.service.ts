@@ -3,7 +3,7 @@ import { AuthStatus } from '../interfaces/AuthStatus.type';
 import { User, UserResponse } from '../interfaces/User.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -40,7 +40,20 @@ export class AuthService {
       password: password,
     }).pipe(
       map(response => this.authSuccess(response)),
-      catchError((error:any)=>this.authError(error))
+      catchError((error:any)=>this.handleError(error))
+    );
+  }
+
+  register(username: string, email: string, password: string, password_confirmation: string):Observable<boolean>{
+    this._authError.set(null);
+    return this.http.post<any>(`${this.apiUrl}/register`,{
+      username,
+      email,
+      password,
+      password_confirmation
+    }).pipe(
+      map(() => true),
+      catchError((error:any) => error.status === 422 ? throwError(() => error) : this.handleError(error))
     );
   }
   checkAuthStatus():Observable<boolean>{
@@ -51,7 +64,7 @@ export class AuthService {
     }
     return this.http.get<UserResponse>(`${this.apiUrl}/auth/check-status`).pipe(
       map(response => this.authSuccess(response)),
-      catchError((error:any)=>this.authError(error))
+      catchError((error:any)=>this.handleError(error))
     );
   }
   logout(){
@@ -68,19 +81,22 @@ export class AuthService {
     localStorage.setItem('token', response.access_token);
     return true;
   }
-  authError(error:any){
-    this.logout();
 
-    let msg = 'Error inesperado';
-
-    // Si es un error de servidor, problema de red o una excepción de Laravel
+  private handleError(error: any) {
     if (error.status === 0 || error.status >= 500 || error?.error?.exception) {
-      msg = 'Error de servidor. Por favor, prueba en otro momento.';
-    } else if (error?.error?.message) {
-      msg = error.error.message;
+      return this.handleServerError(error);
     }
+    return this.handleAuthError(error);
+  }
 
-    this._authError.set(msg);
+  private handleServerError(error: any) {
+    this._authError.set('Error de servidor o conexión. Por favor, prueba en otro momento.');
+    return of(false);
+  }
+
+  private handleAuthError(error: any) {
+    this.logout();
+    this._authError.set(error?.error?.message);
     return of(false);
   }
 }
