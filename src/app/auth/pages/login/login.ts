@@ -8,7 +8,7 @@ import { FormBuilder,
    ReactiveFormsModule,
    Validators
   } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -25,21 +25,21 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password:['', [Validators.required, Validators.minLength(8)]],
   });
-  router: any;
+  router = inject(Router);
   onSubmit(){
     if(this.loginForm.invalid){
       this.hasError.set(true);
       return;
     }
+    // Ocultamos el error local genérico al hacer la petición
+    this.hasError.set(false);
+
     const {email, password} = this.loginForm.value;
     this.authService.login(email!, password!).subscribe(isValid=>{
       if(isValid){
-        //Pendiente de implementar la redirección
-        // this.router.navigateByUrl('/');
-      }else{
-        this.hasError.set(true);
+        this.router.navigateByUrl('/');
       }
     });
   }
-  
+
 }

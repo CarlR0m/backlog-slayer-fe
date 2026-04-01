@@ -12,6 +12,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 export class AuthService {
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
+  private _authError = signal<string | null>(null);
   private _token = signal<string | null>(localStorage.getItem('token'));
   private apiUrl = environment.api.url;
   private http = inject(HttpClient);
@@ -30,8 +31,10 @@ export class AuthService {
 
   user = computed<User | null>(() => this._user());
   token = computed<string | null>(() => this._token());
+  errorMessage = computed<string | null>(() => this._authError());
 
   login(email: string, password: string):Observable<boolean>{
+    this._authError.set(null);
     return this.http.post<UserResponse>(`${this.apiUrl}/login`,{
       email: email,
       password: password,
@@ -61,11 +64,23 @@ export class AuthService {
     this._authStatus.set('authenticated');
     this._user.set(response.user);
     this._token.set(response.access_token);
+    this._authError.set(null);
     localStorage.setItem('token', response.access_token);
     return true;
   }
   authError(error:any){
     this.logout();
+
+    let msg = 'Error inesperado';
+
+    // Si es un error de servidor, problema de red o una excepción de Laravel
+    if (error.status === 0 || error.status >= 500 || error?.error?.exception) {
+      msg = 'Error de servidor. Por favor, prueba en otro momento.';
+    } else if (error?.error?.message) {
+      msg = error.error.message;
+    }
+
+    this._authError.set(msg);
     return of(false);
   }
 }
