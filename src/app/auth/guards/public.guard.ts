@@ -11,7 +11,7 @@ export const publicGuard: CanMatchFn = async () => {
   const authenticated = await firstValueFrom(authService.checkAuthStatus());
 
   if (authenticated) {
-    router.navigate(['/dashboard']);
+    router.navigate(['/back-log-slayer']);
     return false;
   }
   return true;

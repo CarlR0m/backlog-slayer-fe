@@ -31,13 +31,13 @@ export class LoginComponent {
       this.hasError.set(true);
       return;
     }
-    
+
     this.hasError.set(false);
 
     const {email, password} = this.loginForm.value;
     this.authService.login(email!, password!).subscribe(isValid=>{
       if(isValid){
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/back-log-slayer');
       }
     });
   }
