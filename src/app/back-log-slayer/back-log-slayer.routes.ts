@@ -1,22 +1,25 @@
-import {Routes} from '@angular/router';
+import { Routes } from '@angular/router';
+import { MainLayot } from './layout/main-layot/main-layot';
+import { PruebaComponent } from './pages/prueba/prueba';
 
-export const routes: Routes = [
+const backLogSlayerRoutes: Routes = [
   {
     path: '',
-    //component: Componente principal;
-    children : [
+    component: MainLayot,
+    children: [
       //Vistas Publicas
       {
-        path: '',
-        //component: ;
+        path: 'prueba',
+        component: PruebaComponent,
       },
       //Vistas Privadas
+      //...
       {
-        path: '',
-        //component: ;
-      }
+        path: '**',
+        redirectTo: 'prueba'
+      },
     ]
   }
 ];
 
-export default routes;
+export default backLogSlayerRoutes;
