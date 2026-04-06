@@ -1,0 +1,58 @@
+<div class="d-flex flex-column h-100 justify-content-center px-2">
+  <h2 class="fw-bold text-uppercase border-bottom border-dark pb-2 mb-4">
+    Inicio de sesión
+  </h2>
+  <form
+  [formGroup] = "loginForm"
+  (ngSubmit)="onSubmit()"
+  >
+    <div class="mb-3">
+      <label for="login-username" class="form-label fw-semibold">Correo</label>
+      <input
+        id="login-username"
+        type="text"
+        class="form-control"
+        placeholder="Nombre de usuario..."
+        formControlName="email"
+      />
+    </div>
+
+    <div class="mb-1">
+      <label for="login-password" class="form-label fw-semibold">Contraseña</label>
+      <input
+        id="login-password"
+        type="password"
+        class="form-control"
+        placeholder="Contraseña..."
+        formControlName="password"
+      />
+    </div>
+
+    <div class="mb-4">
+      <a routerLink="/auth/register" class="text-dark text-decoration-underline small">
+        Registrarse
+      </a>
+    </div>
+
+    <div class="d-grid mb-2">
+      <button type="submit" class="btn btn-outline-dark fw-bold text-uppercase py-2">
+        Iniciar sesión
+      </button>
+    </div>
+
+    <div class="text-center">
+      <a routerLink="/back-log-slayer" class="text-dark text-decoration-underline small">
+        Continuar sin iniciar sesión
+      </a>
+    </div>
+    @if(hasError() || authService.errorMessage()){
+      <div class="alert alert-danger py-2 my-2 text-center" role="alert">
+        @if(hasError()){
+          Por favor, introduce un usuario y contraseña válidos.
+        } @else {
+          {{ authService.errorMessage() }}
+        }
+      </div>
+    }
+  </form>
+</div>
