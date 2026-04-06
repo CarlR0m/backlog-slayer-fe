@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
-import { Footer } from '../../../shared/footer/footer';
+import { Footer } from '../../components/footer/footer';
 
 
 @Component({
