@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { getFieldErrorMsg, setServerErrors } from '../../../utils/form-utils';
+import { getFieldErrorMsg, setServerErrors } from '../../../shared/utils/form-utils';
 
 @Component({
   selector: 'app-register',
@@ -21,11 +21,11 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
-  },{
+  }, {
     validators: [this.validateEqualPasswords('password', 'password_confirmation')],
   });
-  validateEqualPasswords(password1:string , password2:string){
-    return (registerForm: AbstractControl) =>{
+  validateEqualPasswords(password1: string, password2: string) {
+    return (registerForm: AbstractControl) => {
       const pass1 = registerForm.get(password1)?.value;
       const pass2 = registerForm.get(password2)?.value;
       return pass1 === pass2 ? null : { passwordsNotEquals: true };

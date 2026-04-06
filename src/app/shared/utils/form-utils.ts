@@ -35,3 +35,20 @@ export const setServerErrors = (form: FormGroup, serverErrorResponses: any) => {
     }
   });
 };
+
+export const SERVER_ERROR_MESSAGE = 'Error de servidor o conexión. Por favor, prueba en otro momento.';
+
+export const getApiErrorMsg = (error: any): string => {
+  if (error.status === 0 || error.status >= 500 || error?.error?.exception) {
+    return SERVER_ERROR_MESSAGE;
+  }
+  return error?.error?.message || 'Algo salió mal. Por favor, inténtalo de nuevo.';
+};
+
+export const handleFormError = (form: FormGroup, error: any): string | null => {
+  if (error.status === 422) {
+    setServerErrors(form, error.error);
+    return null;
+  }
+  return getApiErrorMsg(error);
+};

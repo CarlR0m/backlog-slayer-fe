@@ -8,7 +8,7 @@ export interface User {
   id:                number;
   username:          string;
   email:             string;
-  steam_id?:          number;
+  steam_id?:          string;
   role:              string;
 }
 
