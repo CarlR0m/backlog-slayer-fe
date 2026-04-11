@@ -1,10 +1,50 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+<div class="modal fade" id="gameImportModal" tabindex="-1" aria-hidden="true" (hidden.bs.modal)="resetModal()">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-black shadow-lg" style="background-color: white; border-radius: 15px;">
 
-@Component({
-  selector: 'app-game-import-modal',
-  imports: [],
-  template: `<p>game-import-modal works!</p>`,
-  styleUrl: './game-import-modal.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class GameImportModal { }
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="resetModal()"></button>
+      </div>
+
+      <div class="modal-body text-center px-4 pb-5">
+
+        @switch (currentStep()) {
+
+        @case ('select_platform') {
+        <h3 class="fw-bold mb-4 border-bottom border-dark pb-2 d-inline-block">Elige una plataforma</h3>
+
+        @if (isLoadingPlatforms()) {
+        <div class="my-5">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+        } @else {
+        <div class="row g-3 justify-content-center mt-2">
+          @for (platform of platformsList(); track platform.id) {
+          <div class="col-4">
+            <button (click)="selectPlatform(platform)" class="btn btn-outline-dark w-100 py-3 rounded-3 shadow-sm">
+              <span class="fw-bold mt-2">{{ platform.name }}</span>
+            </button>
+          </div>
+          }
+        </div>
+        }
+        }
+
+        @case ('OAuth') {
+        <h3 class="fw-bold mb-4">Conectando con {{ selectedPlatform()?.name }}...</h3>
+        <p class="mb-4">Serás redirigido a la página oficial para iniciar sesión de forma segura.</p>
+        <div class="spinner-border text-primary my-3" role="status" style="width: 3.5rem; height: 3.5rem;"></div>
+        }
+
+        @case ('error') {
+        <h3 class="fw-bold mb-2">¡Vaya! Algo ha ido mal</h3>
+        <p class="mb-3 opacity-75" style="font-size: 0.9rem;">
+          {{ errorMessage() }}
+        </p>
+        <button class="btn btn-dark fw-bold rounded-pill px-5 mt-3" (click)="goBack()">Intentar de nuevo</button>
+        }
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,35 +1,82 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ImportSteamGamesService } from '../../service/import-steam-games.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { GamesService } from '../../service/games.service';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Platform, PlatformConfig } from '../../interface/Platform.interface';
+import { ModalStep } from '../../interface/ModalStep.type';
 
 @Component({
   selector: 'app-game-import-modal',
-  imports: [],
-  template: `<p>game-import-modal works!</p>`,
-  styleUrl: './game-import-modal.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ReactiveFormsModule],
+  templateUrl: './game-import-modal.html',
 })
-export class GameImportModal {
-  private steamService = inject(ImportSteamGamesService);
+export class GameImportModal implements OnInit {
+  private gamesService = inject(GamesService);
   private form = inject(FormBuilder);
 
-  loading = signal(false);
-  importForm = this.form.group({
-    steamId: ['', [Validators.required, Validators.pattern(/^[0-9]+$/),Validators.minLength(17),Validators.maxLength(17)]],
-  });
-  onSubmit(){
-    if(this.importForm.valid) return;
-    this.loading.set(true);
-    const {steamId} = this.importForm.value;
-    this.steamService.importGamesSteam(steamId!).subscribe({
+  platformsList = signal<Platform[]>([]);
+  isLoadingPlatforms = signal(true);
+  currentStep = signal<ModalStep>('select_platform');
+  selectedPlatform = signal<Platform | null>(null);
+  errorMessage = signal<string>('');
+  //Pediente de borrar
+  gamesCount = signal<number>(0);
+
+  importForm = this.form.group({ platformUserId: [''] });
+
+  private platformConfigs: Record<string, PlatformConfig> = {
+    steam: {
+      step: 'OAuth',
+      oAuthAction: () => this.handleSteamRedirect(),
+    },
+  };
+
+  ngOnInit() {
+    this.gamesService.getPlatforms().subscribe({
       next: (response) => {
-        this.loading.set(false);
-        console.log(response);
+        this.platformsList.set(response);
+        this.isLoadingPlatforms.set(false);
       },
-      error: (error) => {
-        this.loading.set(false);
-        console.log(error);
+      error: () => {
+        this.errorMessage.set('Error al cargar las plataformas. Inténtalo más tarde.');
+        this.isLoadingPlatforms.set(false);
       }
     });
+  }
+
+  selectPlatform(platform: Platform) {
+    this.selectedPlatform.set(platform);
+    this.errorMessage.set('');
+
+    const config = this.platformConfigs[platform.name.toLowerCase()];
+    if (!config) return;
+
+    this.currentStep.set(config.step);
+
+    if (config.oAuthAction) {
+      config.oAuthAction();
+    }
+  }
+  private handleSteamRedirect() {
+    this.gamesService.getSteamAuthUrl().subscribe({
+      next: (response) => {
+        window.location.href = response.url;
+      },
+      error: () => {
+        this.errorMessage.set('No se pudo conectar con Steam. Inténtalo más tarde.');
+        this.currentStep.set('error');
+      }
+    });
+  }
+
+  goBack() {
+    this.currentStep.set('select_platform');
+    this.selectedPlatform.set(null);
+    this.importForm.reset();
+  }
+
+  resetModal() {
+    this.currentStep.set('select_platform');
+    this.selectedPlatform.set(null);
+    this.errorMessage.set('');
   }
 }

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayot } from './layout/main-layot/main-layot';
 import { PruebaComponent } from './pages/prueba/prueba';
+import { SteamCallBack } from './pages/steam-callback/steam-callback';
 
 const backLogSlayerRoutes: Routes = [
   {
@@ -11,9 +12,15 @@ const backLogSlayerRoutes: Routes = [
       {
         path: 'prueba',
         component: PruebaComponent,
+        title: 'Prueba'
       },
       //Vistas Privadas
-      //...
+      {
+        path: 'steam-sync',
+        component: SteamCallBack,
+        title: 'Sincronización con Steam'
+        //Añadir guard
+      },
       {
         path: '**',
         redirectTo: 'prueba'
