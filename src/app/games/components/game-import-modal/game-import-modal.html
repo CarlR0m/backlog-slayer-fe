@@ -29,43 +29,19 @@
         </div>
         }
         }
-        @case ('input_id') {
-        <h3 class="fw-bold mb-4">Conectar con {{ selectedPlatform()?.name }}</h3>
-        <form [formGroup]="importForm" (ngSubmit)="onSubmit()">
-          <input type="text" formControlName="platformUserId" [placeholder]="getPlaceholder()"
-            class="form-control text-center rounded-pill fw-bold border-2"
-            [class.is-invalid]="importForm.get('platformUserId')?.invalid && importForm.get('platformUserId')?.touched">
-          @if (getFieldError()) {
-          <div class="invalid-feedback d-block mt-1" style="font-size: 0.82rem;">
-            {{ getFieldError() }}
-          </div>
-          }
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-secondary rounded-pill px-4" (click)="goBack()">Atrás</button>
-            <button type="submit" class="btn btn-primary fw-bold rounded-pill px-4">Importar</button>
-          </div>
-        </form>
-        }
 
-        @case ('loading') {
-        <h3 class="fw-bold mb-4">Buscando tus juegos...</h3>
+        @case ('OAuth') {
+        <h3 class="fw-bold mb-4">Conectando con {{ selectedPlatform()?.name }}...</h3>
+        <p class="mb-4">Serás redirigido a la página oficial para iniciar sesión de forma segura.</p>
         <div class="spinner-border text-primary my-3" role="status" style="width: 3.5rem; height: 3.5rem;"></div>
         }
 
-        @case ('success') {
-        <h3 class="fw-bold mb-4">¡Importación Exitosa!</h3>
-        <p>Se han sincronizado <strong>{{ gamesCount() }}</strong> juegos correctamente.</p>
-        <p class="opacity-75" style="font-size: 0.85rem;">Los detalles y tags se cargarán en segundo plano.</p>
-        <button class="btn btn-primary fw-bold rounded-pill px-5 mt-3" data-bs-dismiss="modal"
-          (click)="resetModal()">Genial</button>
-        }
-
         @case ('error') {
-        <h3 class="fw-bold mb-2">¡Importación fallida!</h3>
+        <h3 class="fw-bold mb-2">¡Vaya! Algo ha ido mal</h3>
         <p class="mb-3 opacity-75" style="font-size: 0.9rem;">
           {{ errorMessage() }}
         </p>
-        <button class="btn btn-dark fw-bold rounded-pill px-5 mt-3" (click)="goBack()">Volver al inicio</button>
+        <button class="btn btn-dark fw-bold rounded-pill px-5 mt-3" (click)="goBack()">Intentar de nuevo</button>
         }
         }
       </div>

@@ -11,7 +11,8 @@ export interface Platform {
 export interface PlatformConfig {
   step: ModalStep;
   placeholder?: string;
-  validators: ValidatorFn[];
-  importFn: (id: string) => Observable<any>;
-  getError: (errorKey: string) => string;
+  validators?: ValidatorFn[];
+  importFn?: (id: string) => Observable<any>;
+  getError?: (errorKey: string) => string;
+  oAuthAction?: () => void;
 }
