@@ -1,0 +1,21 @@
+<div class="form-container">
+  <div class="step active">
+    <h2>{{ steps[step].question }}</h2>
+    <hr size="5" color="black">
+    <div class="options">
+      <button 
+        type="button" 
+        *ngFor="let option of steps[step].options"
+        (click)="selectOption(steps[step].controlName, option)"
+        [class.selected]="form.get(steps[step].controlName)?.value === option.value">
+        {{ option.label }}
+      </button>
+    </div>
+  </div>
+
+  <div class="navigation">
+    <button type="button" (click)="prevStep()" [disabled]="step === 0">&#8592;</button>
+    <button type="button" *ngIf="step < steps.length - 1" (click)="nextStep()">Skip</button>
+    <button type="button" *ngIf="step === steps.length - 1" (click)="confirm()">Confirmar</button>
+  </div>
+</div>

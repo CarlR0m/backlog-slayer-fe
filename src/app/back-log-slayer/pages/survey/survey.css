@@ -1,0 +1,92 @@
+.form-container {
+    width: 50vw;
+    max-width: 95%;
+    /* que no se salga en móvil */
+    margin: 50px auto;
+    font-family: 'Arial', sans-serif;
+    height: 85vh;
+}
+
+.step {
+    display: none;
+    text-align: center;
+    transition: transform 1s ease, opacity 1s ease;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.step.active {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.step h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Grid de botones */
+.options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 3 columnas desktop */
+    gap: 15px;
+}
+
+.options button {
+    aspect-ratio: 1 / 1;
+    /* siempre cuadrado */
+    font-size: 1rem;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: 100%;
+    /* será controlado por el grid */
+    box-sizing: border-box;
+}
+
+.options button:hover {
+    transform: scale(1.05);
+}
+
+.options button.selected {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Navegación flechas */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.navigation button {
+    font-size: 2rem;
+    padding: 10px 20px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.navigation button:hover {
+    transform: scale(1.2);
+}
+
+/* HR responsive */
+.mi-linea {
+    margin-top: -20px;
+    width: 100%;
+    max-width: 500px;
+    height: 5px;
+    background-color: black;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+}
