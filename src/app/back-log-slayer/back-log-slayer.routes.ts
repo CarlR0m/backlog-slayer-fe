@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayot } from './layout/main-layot/main-layot';
 import { PruebaComponent } from './pages/prueba/prueba';
 import { SteamCallBack } from './pages/steam-callback/steam-callback';
+import { Survey } from './pages/survey/survey';
 
 const backLogSlayerRoutes: Routes = [
   {
@@ -14,6 +15,11 @@ const backLogSlayerRoutes: Routes = [
         component: PruebaComponent,
         title: 'Prueba'
       },
+      {
+        path: 'survey',
+        component: Survey,
+        title: 'Encuesta'
+      },
       //Vistas Privadas
       {
         path: 'steam-sync',
@@ -22,9 +28,15 @@ const backLogSlayerRoutes: Routes = [
         //Añadir guard
       },
       {
+        path: 'survey',
+        component: Survey,
+        title: 'Encuesta'
+      },
+      {
         path: '**',
         redirectTo: 'prueba'
       },
+      
     ]
   }
 ];

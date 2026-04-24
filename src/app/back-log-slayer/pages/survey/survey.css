@@ -1,10 +1,38 @@
+.survey-container {
+    width: 70%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    align-items: center;
+    min-height: 85vh;
+}
+
 .form-container {
-    width: 50vw;
-    max-width: 95%;
-    /* que no se salga en móvil */
-    margin: 50px auto;
-    font-family: 'Arial', sans-serif;
-    height: 85vh;
+    width: 100%;
+    min-height: 85vh;
+    margin-top: 5%;
+    padding: 5%;
+    background-color: #252525ee;
+    border-radius: 12px;
+}
+
+h2 {
+    font-family: 'Baskervville', serif;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.hr-line {
+    margin: auto;
+    width: 100%;
+    height: 5px;
+    margin-top: -20px;
+    background:
+        linear-gradient(25deg, transparent 12px, #ffffff 0) left,
+        linear-gradient(-25deg, transparent 12px, #ffffff 0) right;
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    border: none;
 }
 
 .step {
@@ -23,6 +51,45 @@
     transform: scale(1);
 }
 
+.survey-row {
+    display: contents;
+}
+
+.nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background-color: #252525ee;
+    transition: transform 0.2s, background-color 0.2s;
+    min-width: 50%;
+    min-height: 50%;
+}
+
+.nav:hover:not(:disabled) {
+    transform: scale(1.05);
+    background-color: #e0e0e0;
+    color: black;
+}
+
+.nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nav.prev {
+    justify-self: start;
+    margin-right: 0;
+}
+
+.nav.next {
+    justify-self: end;
+    margin-left: 0;
+}
+
 .step h2 {
     margin: 0;
     font-size: 2rem;
@@ -37,7 +104,7 @@
 }
 
 .options button {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 0.7;
     /* siempre cuadrado */
     font-size: 1rem;
     padding: 0;
@@ -46,6 +113,7 @@
     cursor: pointer;
     transition: transform 0.2s;
     width: 100%;
+    white-space: pre-line;
     /* será controlado por el grid */
     box-sizing: border-box;
 }
@@ -59,27 +127,6 @@
     color: #fff;
 }
 
-/* Navegación flechas */
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.navigation button {
-    font-size: 2rem;
-    padding: 10px 20px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.navigation button:hover {
-    transform: scale(1.2);
-}
-
-/* HR responsive */
 .mi-linea {
     margin-top: -20px;
     width: 100%;
