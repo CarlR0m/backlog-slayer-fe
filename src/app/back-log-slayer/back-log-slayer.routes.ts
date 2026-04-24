@@ -28,9 +28,15 @@ const backLogSlayerRoutes: Routes = [
         //Añadir guard
       },
       {
+        path: 'survey',
+        component: Survey,
+        title: 'Encuesta'
+      },
+      {
         path: '**',
         redirectTo: 'prueba'
       },
+      
     ]
   }
 ];

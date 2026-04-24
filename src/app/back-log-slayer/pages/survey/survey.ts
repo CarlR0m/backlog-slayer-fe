@@ -188,7 +188,7 @@ export class Survey {
       controlName: 'gameType',
     },
     {
-
+      // 🔥 STEP DINÁMICO
       question: '¿Qué tipo de juego quieres?',
       options: [],
       controlName: 'tags',
@@ -228,6 +228,7 @@ export class Survey {
     });
   }
 
+  // 🔥 Verificar si una opción está seleccionada (para el paso de tags)
   isTagSelected(value: string): boolean {
     const tags = this.form.get('tags')?.value as string[];
     return tags.includes(value);
