@@ -14,7 +14,6 @@ export class Survey {
   form: FormGroup;
   step: number = 0;
 
-  // 🔥 MAPA DINÁMICO DE SUBGÉNEROS
   gameTypeOptionsMap: Record<string, { label: string; value: string }[]> = {
     puzzle: [
       { label: 'Aventura', value: 'adventure' },
@@ -188,7 +187,6 @@ export class Survey {
       controlName: 'gameType',
     },
     {
-      // 🔥 STEP DINÁMICO
       question: '¿Qué tipo de juego quieres?',
       options: [],
       controlName: 'tags',
@@ -222,7 +220,7 @@ export class Survey {
       library: [''],
       sessionLength: [''],
       gameType: [''],
-      tags: [[]],  // Array para múltiples selections
+      tags: [[]],  
       modo: [''],
       plataforma: [''],
     });
@@ -232,17 +230,13 @@ export class Survey {
     const tags = this.form.get('tags')?.value as string[];
     return tags.includes(value);
   }
-
-  // 🔥 Toggle selección en tags (agregar/quitar)
   toggleTag(option: { label: string; value: string }) {
     const tagsControl = this.form.get('tags');
     const currentTags = (tagsControl?.value as string[]) || [];
     
     if (currentTags.includes(option.value)) {
-      // Quitar si ya está seleccionado
       tagsControl?.setValue(currentTags.filter(t => t !== option.value));
     } else {
-      // Agregar si no está seleccionado
       tagsControl?.setValue([...currentTags, option.value]);
     }
   }
@@ -265,10 +259,9 @@ export class Survey {
   }
 
   selectOption(controlName: string, option: { label: string; value: string }) {
-    // 🔥 Para el paso de tags, usar toggle en lugar de setValue único
     if (controlName === 'tags') {
       this.toggleTag(option);
-      return; // No avanzar automáticamente en el paso de tags
+      return; 
     }
 
     this.form.get(controlName)?.setValue(option.value);
@@ -292,7 +285,6 @@ export class Survey {
 
   prevStep() {
     if (this.step > 0) {
-      // Si estamos en plataforma (step 5) y user eligió "other", ir a gameType (step 2)
       const gameType = this.form.get('gameType')?.value;
       if (this.step === 4 && gameType === 'other') {
         this.step = 2;
