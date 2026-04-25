@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GamesService } from '../../../games/service/games.service';
-import { SyncStats } from '../../../games/interface/ImportSteam.interface';
+import { SteamService } from '../../../games/services/steam.service';
+import { SyncStats } from '../../../games/interfaces/ImportSteam.interface';
 
 @Component({
   selector: 'app-steam-callback',
@@ -11,7 +11,7 @@ import { SyncStats } from '../../../games/interface/ImportSteam.interface';
 export class SteamCallBack implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private gamesService = inject(GamesService);
+  private steamService = inject(SteamService);
 
   status = signal<'syncing' | 'success' | 'error'>('syncing');
   stats = signal<SyncStats | null>(null);
@@ -28,7 +28,7 @@ export class SteamCallBack implements OnInit {
     }
   }
   private executeSync() {
-    this.gamesService.syncSteamGames().subscribe({
+    this.steamService.syncSteamGames().subscribe({
       next: (response) => {
         this.stats.set(response.stats);
         this.status.set('success');
