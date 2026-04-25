@@ -1,8 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { GamesService } from '../../service/games.service';
+import { PlatformService } from '../../services/platform.service';
+import { SteamService } from '../../services/steam.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Platform, PlatformConfig } from '../../interface/Platform.interface';
-import { ModalStep } from '../../interface/ModalStep.type';
+import { Platform } from '../../interfaces/Platform.interface';
+import { PlatformConfig } from '../../interfaces/PlatformConfig.interface';
+import { ModalStep } from '../../interfaces/ModalStep.type';
 
 @Component({
   selector: 'app-game-import-modal',
@@ -10,7 +12,8 @@ import { ModalStep } from '../../interface/ModalStep.type';
   templateUrl: './game-import-modal.html',
 })
 export class GameImportModal implements OnInit {
-  private gamesService = inject(GamesService);
+  private platformService = inject(PlatformService);
+  private steamService = inject(SteamService);
   private form = inject(FormBuilder);
 
   platformsList = signal<Platform[]>([]);
@@ -31,7 +34,7 @@ export class GameImportModal implements OnInit {
   };
 
   ngOnInit() {
-    this.gamesService.getPlatforms().subscribe({
+    this.platformService.getPlatforms().subscribe({
       next: (response) => {
         this.platformsList.set(response);
         this.isLoadingPlatforms.set(false);
@@ -57,7 +60,7 @@ export class GameImportModal implements OnInit {
     }
   }
   private handleSteamRedirect() {
-    this.gamesService.getSteamAuthUrl().subscribe({
+    this.steamService.getSteamAuthUrl().subscribe({
       next: (response) => {
         window.location.href = response.url;
       },

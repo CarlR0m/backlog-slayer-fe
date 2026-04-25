@@ -1,9 +1,11 @@
-<div class="modal fade" id="gameImportModal" tabindex="-1" aria-hidden="true" (hidden.bs.modal)="resetModal()">
+<div class="modal fade" id="gameImportModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" (hidden.bs.modal)="resetModal()">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-black shadow-lg" style="background-color: white; border-radius: 15px;">
 
       <div class="modal-header border-0 pb-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="resetModal()"></button>
+        @if (currentStep() !== 'OAuth') {
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="resetModal()"></button>
+        }
       </div>
 
       <div class="modal-body text-center px-4 pb-5">
