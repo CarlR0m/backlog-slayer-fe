@@ -8,21 +8,21 @@ import { GameTag, GamePlatform } from '../../games/interfaces/Game.interface';
  * @property {string} score - Puntuación calculada
  * @property {GamePlatform[]} platforms - Plataformas
  * @property {string} [img] - URL de la imagen
+ * @property {string} [store_url] - URL de la tienda de Steam
  * @property {string | null} [description] - Descripción
  * @property {GameTag[]} [genders] - Géneros
  * @property {string} [tiempojugado] - Tiempo jugado
- * @property {string} [image] - URL de la imagen
  */
 export interface RecommendedGame {
   id: number;
   title: string;
   score: string;
   platforms: GamePlatform[];
-  img?: string;
+  img: string;
+  store_url: string;
   description?: string | null;
   genders?: GameTag[];
   tiempojugado?: string;
-  image?: string;
 }
 
 /**
@@ -35,3 +35,6 @@ export interface SurveyResponse {
   mainRecommendation: RecommendedGame | null;
   secondaryRecommendations: RecommendedGame[];
 }
+
+// Clave de las recomendaciones en localStorage
+export const RECOMMENDATION_KEY = 'recommendation';

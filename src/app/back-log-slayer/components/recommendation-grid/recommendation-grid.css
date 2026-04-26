@@ -1,0 +1,34 @@
+.game-grid {
+  align-items: flex-start;
+}
+
+.game-item {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.game-title {
+  font-family: inherit;
+  font-size: 0.82rem;
+  line-height: 1.3em;
+  height: 2.6em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.game-cover {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.game-info {
+  height: 110px;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
