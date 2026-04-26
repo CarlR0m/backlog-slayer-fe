@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Backlog Slayer</a>
+    <a class="navbar-brand" href="#">
+      <img src="/logo.png" alt="Backlog Slayer" style="height: 52px;">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -13,6 +15,15 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Juegos</a>
         </li>
+        @if (authService.authStatus() === 'authenticated') {
+          <li class="nav-item">
+            @if (authService.user()?.steam_id) {
+              <a class="nav-link" routerLink="/back-log-slayer/games-library">Mi Biblioteca</a>
+            } @else {
+              <a class="nav-link" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#gameImportModal">Mi Biblioteca</a>
+            }
+          </li>
+        }
         <li class="nav-item">
           <a class="nav-link" role="button" style="cursor:pointer;" data-bs-toggle="modal"
             data-bs-target="#gameImportModal">Importar</a>
