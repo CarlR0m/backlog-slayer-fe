@@ -5,6 +5,8 @@ import { SteamCallBack } from './pages/steam-callback/steam-callback';
 import { Survey } from './pages/survey/survey';
 import { GameRecommendation } from './pages/game-recommendation/game-recommendation';
 import { OtherGames } from './pages/other-games/other-games';
+import { GamesLibrary } from './pages/games-library/games-library';
+import { authGuard } from '../auth/guards/auth.guard';
 
 const backLogSlayerRoutes: Routes = [
   {
@@ -33,6 +35,12 @@ const backLogSlayerRoutes: Routes = [
         component: SteamCallBack,
         title: 'Sincronización con Steam'
         //Añadir guard
+      },
+      {
+        path: 'games-library',
+        component: GamesLibrary,
+        title: 'Mi Biblioteca',
+        canMatch: [authGuard]
       },
       {
         path: '**',

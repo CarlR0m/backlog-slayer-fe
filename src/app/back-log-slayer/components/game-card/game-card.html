@@ -1,0 +1,9 @@
+<div class="game-card">
+  <img
+    [src]="game().cover_image_url"
+    [alt]="game().title"
+    class="game-card-cover"
+    (error)="$any($event.target).src='https://placehold.co/200x300?text=Sin+imagen'"
+  />
+  <p class="game-card-title" [title]="game().title">{{ game().title }}</p>
+</div>
