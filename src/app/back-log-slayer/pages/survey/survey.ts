@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { SurveyResponse, RECOMMENDATION_KEY } from '../../interfaces/survey.interface';
 
 @Component({
   selector: 'app-survey',
@@ -214,13 +216,14 @@ export class Survey {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.form = this.fb.group({
       library: [''],
       sessionLength: [''],
       gameType: [''],
-      tags: [[]],  
+      tags: [[]],
       modo: [''],
       plataforma: [''],
     });
@@ -233,7 +236,7 @@ export class Survey {
   toggleTag(option: { label: string; value: string }) {
     const tagsControl = this.form.get('tags');
     const currentTags = (tagsControl?.value as string[]) || [];
-    
+
     if (currentTags.includes(option.value)) {
       tagsControl?.setValue(currentTags.filter(t => t !== option.value));
     } else {
@@ -261,7 +264,7 @@ export class Survey {
   selectOption(controlName: string, option: { label: string; value: string }) {
     if (controlName === 'tags') {
       this.toggleTag(option);
-      return; 
+      return;
     }
 
     this.form.get(controlName)?.setValue(option.value);
@@ -297,11 +300,12 @@ export class Survey {
   confirm() {
     const payload = this.form.value;
 
-    this.http.post('http://127.0.0.1:8000/api/recommendations/survey', payload)
+    this.http.post<SurveyResponse>('http://127.0.0.1:8000/api/recommendations/survey', payload)
       .subscribe({
         next: (response) => {
           console.log('Respuesta API:', response);
-          alert('Recomendación recibida');
+          localStorage.setItem(RECOMMENDATION_KEY, JSON.stringify(response));
+          this.router.navigate(['/back-log-slayer/game-recommendation']);
         },
         error: (error) => {
           console.error('Error API:', error);

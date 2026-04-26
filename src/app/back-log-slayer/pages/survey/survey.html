@@ -18,7 +18,9 @@
       <div class="options">
         <button *ngFor="let option of (steps[step].dynamic ? getTagOptions() : steps[step].options)"
           (click)="selectOption(steps[step].controlName, option)"
-          [class.selected]="steps[step].dynamic && isTagSelected(option.value)">
+          [class.selected]="steps[step].dynamic
+            ? isTagSelected(option.value)
+            : form.get(steps[step].controlName)?.value === option.value">
           {{ option.label }}
         </button>
       </div>
