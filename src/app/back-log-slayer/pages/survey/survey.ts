@@ -146,8 +146,7 @@ export class Survey {
       { label: 'Finales múltiples', value: 'multipleendings' },
     ],
   };
-
-  steps = [
+git  steps = [
     {
       question: '¿Quieres que busquemos en tu biblioteca?',
       options: [
