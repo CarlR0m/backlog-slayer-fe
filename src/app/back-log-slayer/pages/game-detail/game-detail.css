@@ -19,8 +19,9 @@
 
 .detail-cover-col {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .detail-cover {
@@ -99,6 +100,41 @@
   margin-top: auto;
   padding-top: 0.5rem;
 }
+
+.detail-library-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: #adb5bd;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+}
+
+.meta-playtime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #4dabf7;
+  font-weight: 600;
+}
+
+.detail-status {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.detail-status--backlog    { background: rgba(108, 117, 125, 0.25); color: #adb5bd; }
+.detail-status--playing    { background: rgba(13, 110, 253, 0.25);  color: #74b4ff; }
+.detail-status--completed  { background: rgba(25, 135, 84, 0.25);   color: #6fcf97; }
+.detail-status--dropped    { background: rgba(220, 53, 69, 0.25);   color: #f08080; }
 
 .detail-error {
   width: 100%;

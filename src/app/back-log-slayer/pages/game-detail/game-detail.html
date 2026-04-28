@@ -14,6 +14,11 @@
             loading="lazy"
             (error)="$any($event.target).src='https://placehold.co/300x450?text=' + game()!.title"
           />
+          @if (isLibraryGame()) {
+            <div class="detail-library-badge">
+              <i class="bi bi-collection-fill"></i> Mi biblioteca
+            </div>
+          }
         </div>
 
         <!-- Información -->
@@ -49,6 +54,23 @@
               <span class="meta-label">Puntuación</span>
               <span class="meta-value">{{ game()!.score }}</span>
             </li>
+            @if (isLibraryGame()) {
+              <li>
+                <span class="meta-label">Horas jugadas</span>
+                <span class="meta-value meta-playtime">
+                  <i class="bi bi-clock-fill"></i>
+                  {{ playtimeHours() }}h {{ playtimeMinutes() }}min
+                </span>
+              </li>
+              <li>
+                <span class="meta-label">Estado</span>
+                <span class="meta-value">
+                  <span class="detail-status detail-status--{{ userGame()!.pivot.status }}">
+                    {{ statusLabel() }}
+                  </span>
+                </span>
+              </li>
+            }
           </ul>
 
           <!-- Acciones -->

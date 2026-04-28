@@ -149,3 +149,34 @@ export interface PaginatedGames {
   per_page: number;
   total: number;
 }
+
+export interface ProfileGame {
+  id: number;
+  title: string;
+  img: string;
+}
+
+export interface ProfileTopGame extends ProfileGame {
+  playtime: number; // minutos totales jugados
+}
+
+export interface UserProfile {
+  user: {
+    id: number;
+    username: string;
+    steam_id: string | null;
+  };
+  tags: { id: number; name: string }[];
+  topGame: ProfileTopGame | null;
+  recentGames: ProfileGame[];
+  totalPlaytime: number; // minutos totales de toda la biblioteca
+  statistics: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string[];
+      hoverOffset: number;
+    }[];
+  };
+}

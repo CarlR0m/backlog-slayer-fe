@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Game, UserGame, Tag, GameSummary } from '../interfaces/Game.interface';
+import { Game, UserGame, Tag, GameSummary, UserProfile } from '../interfaces/Game.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +29,9 @@ export class GamesService {
 
   getGameSummary(userId: number): Observable<GameSummary> {
     return this.http.get<GameSummary>(`${this.apiUrl}/${userId}/game-summary`);
+  }
+
+  getUserProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.apiUrl}/user/profile`);
   }
 }

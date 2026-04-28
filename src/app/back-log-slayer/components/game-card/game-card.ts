@@ -25,7 +25,7 @@ export class GameCard {
       next: (fullGame) => {
         this.loading.set(false);
         this.router.navigate(['/back-log-slayer/game-detail'], {
-          state: { game: fullGame },
+          state: { game: fullGame, userGame: this.game() },
         });
       },
       error: () => {
