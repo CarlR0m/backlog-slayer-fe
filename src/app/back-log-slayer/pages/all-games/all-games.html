@@ -1,0 +1,79 @@
+<div class="catalog-wrapper">
+  <div class="catalog-panel">
+
+    <!-- Header -->
+    <div class="library-header">
+      <div class="library-avatar">
+        <i class="bi bi-grid-3x3-gap-fill"></i>
+      </div>
+      <div class="library-user-info">
+        <h2 class="library-username">Catálogo de Juegos</h2>
+        <span class="library-subtitle">
+          @if (!loading() && games().length > 0) {
+            {{ games().length }} juegos disponibles
+          }
+        </span>
+        <hr class="library-divider" />
+      </div>
+    </div>
+
+    <!-- Cargando -->
+    @if (loading()) {
+      <div class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    }
+
+    <!-- Grid de juegos -->
+    @if (!loading() && games().length > 0) {
+      <div class="library-grid">
+        @for (game of games(); track game.id) {
+          <div
+            class="game-card"
+            role="button"
+            [attr.aria-label]="'Ver detalle de ' + game.title"
+            (click)="navigateToDetail(game)"
+          >
+            <div class="game-card-cover-wrapper">
+              <img
+                [src]="game.img"
+                [alt]="game.title"
+                class="game-card-cover"
+                loading="lazy"
+                (error)="$any($event.target).src='https://placehold.co/200x300?text=Sin+imagen'"
+              />
+            </div>
+            <p class="game-card-title" [title]="game.title">{{ game.title }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Estado vacío -->
+    @if (!loading() && games().length === 0 && !error()) {
+      <div class="library-empty">
+        <i class="bi bi-controller fs-1 mb-3 d-block text-secondary"></i>
+        <p class="text-secondary">No hay juegos en el catálogo todavía.</p>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (error()) {
+      <div class="library-empty">
+        <p class="text-danger">{{ error() }}</p>
+      </div>
+    }
+
+    <!-- Footer -->
+    @if (!loading() && games().length > 0) {
+      <div class="library-footer">
+        <a class="btn btn-outline-light px-4 rounded-pill" routerLink="/back-log-slayer/survey">
+          ¿A qué quieres jugar?
+        </a>
+      </div>
+    }
+
+  </div>
+</div>

@@ -132,3 +132,20 @@ export interface GameSummary {
   topGame: TopGame | null;
   recentHistory: never[];
 }
+
+/**
+ * @interface PaginatedGames
+ * @description Respuesta paginada del los juegos de la base de datos
+ * @property {Game[]} data - Lista de juegos de la página actual
+ * @property {number} current_page - Página actual
+ * @property {number} last_page - Última página disponible
+ * @property {number} per_page - Resultados por página
+ * @property {number} total - Total de juegos en la BD
+ */
+export interface PaginatedGames {
+  data: Game[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
