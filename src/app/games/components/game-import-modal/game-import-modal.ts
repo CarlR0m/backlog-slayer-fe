@@ -82,4 +82,5 @@ export class GameImportModal implements OnInit {
     this.selectedPlatform.set(null);
     this.errorMessage.set('');
   }
+
 }
