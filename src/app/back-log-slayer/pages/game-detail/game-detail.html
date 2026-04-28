@@ -1,0 +1,94 @@
+<div class="detail-wrapper">
+
+  @switch (pageState()) {
+
+    @case ('ready') {
+      <div class="detail-panel">
+
+        <!-- Imagen -->
+        <div class="detail-cover-col">
+          <img
+            [src]="game()!.img"
+            [alt]="game()!.title"
+            class="detail-cover"
+            loading="lazy"
+            (error)="$any($event.target).src='https://placehold.co/300x450?text=' + game()!.title"
+          />
+        </div>
+
+        <!-- Información -->
+        <div class="detail-info-col">
+
+          <h1 class="detail-title">{{ game()!.title }}</h1>
+
+          <!-- Géneros -->
+          @if (game()!.genders && game()!.genders.length > 0) {
+            <div class="detail-tags">
+              @for (gender of game()!.genders; track gender.id) {
+                <span class="detail-badge">{{ gender.name }}</span>
+              }
+            </div>
+          }
+
+          <!-- Descripción -->
+          @if (game()!.description) {
+            <p class="detail-description">{{ game()!.description }}</p>
+          }
+
+          <!-- Meta -->
+          <ul class="detail-meta">
+            <li>
+              <span class="meta-label">Plataformas</span>
+              <span class="meta-value">{{ game()!.platforms.map(p => p.name).join(', ') }}</span>
+            </li>
+            <li>
+              <span class="meta-label">Tiempo estimado</span>
+              <span class="meta-value">{{ game()!.tiempojugado }}</span>
+            </li>
+            <li>
+              <span class="meta-label">Puntuación</span>
+              <span class="meta-value">{{ game()!.score }}</span>
+            </li>
+          </ul>
+
+          <!-- Acciones -->
+          <div class="detail-actions">
+            <a
+              [href]="game()!.links.store"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary px-5"
+            >
+              Jugar
+            </a>
+            <button type="button" class="btn btn-outline-light" (click)="goBack()">
+              Volver
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    }
+
+    @case ('error') {
+      <div class="detail-error card border-0 shadow-sm text-center py-5 px-4">
+        <i class="bi bi-controller display-3 text-muted mb-3"></i>
+        <h2 class="h4 mb-2">No se pudo cargar el juego</h2>
+        <p class="text-muted mb-4">
+          Los datos del juego no están disponibles. Vuelve al listado y selecciona un juego.
+        </p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button type="button" class="btn btn-outline-light" (click)="goBack()">
+            Volver
+          </button>
+          <button type="button" class="btn btn-primary px-4" (click)="goToSurvey()">
+            Ir a la encuesta
+          </button>
+        </div>
+      </div>
+    }
+
+  }
+
+</div>

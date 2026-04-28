@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Game, UserGame, Tag, GameSummary } from '../interfaces/Game.interface';
 
@@ -10,6 +10,10 @@ import { Game, UserGame, Tag, GameSummary } from '../interfaces/Game.interface';
 export class GamesService {
   private http = inject(HttpClient);
   private apiUrl = environment.api.url;
+  
+  getAllGames(): Observable<Game[]> {
+    return this.http.get<Game[]>(`${this.apiUrl}/games`);
+  }
 
   getGame(id: number): Observable<Game> {
     return this.http.get<Game>(`${this.apiUrl}/game/${id}`);
