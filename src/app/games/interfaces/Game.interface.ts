@@ -165,6 +165,7 @@ export interface UserProfile {
     id: number;
     username: string;
     steam_id: string | null;
+    avatar: string | null;
   };
   tags: { id: number; name: string }[];
   topGame: ProfileTopGame | null;

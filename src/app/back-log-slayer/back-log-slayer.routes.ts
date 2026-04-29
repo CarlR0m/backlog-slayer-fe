@@ -9,6 +9,7 @@ import { GamesLibrary } from './pages/games-library/games-library';
 import { GameDetail } from './pages/game-detail/game-detail';
 import { AllGames } from './pages/all-games/all-games';
 import { authGuard } from '../auth/guards/auth.guard';
+import { Profile } from './pages/profile/profile';
 
 const backLogSlayerRoutes: Routes = [
   {
@@ -52,6 +53,12 @@ const backLogSlayerRoutes: Routes = [
         path: 'games-library',
         component: GamesLibrary,
         title: 'Mi Biblioteca',
+        canMatch: [authGuard]
+      },
+      {
+        path: 'profile',
+        component: Profile,
+        title: 'Mi Perfil',
         canMatch: [authGuard]
       },
       {

@@ -1,0 +1,241 @@
+.profile-wrapper {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.profile-panel {
+  background: rgba(37, 37, 37, 0.92);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1300px;
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Header ── */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Avatar clicable */
+.profile-avatar-wrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-icon {
+  font-size: 5rem;
+  color: #e0e0e0;
+  line-height: 1;
+  display: block;
+}
+
+.avatar-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-loading {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.profile-avatar-wrapper:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.profile-identity {
+  flex: 1;
+}
+
+.profile-username {
+  font-family: 'Baskervville SC', serif;
+  font-size: 2rem;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+}
+
+.profile-divider {
+  border-color: rgba(255, 255, 255, 0.15);
+  margin: 0.4rem 0 0.6rem;
+}
+
+.profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.profile-tag {
+  font-family: 'Baskervville SC', serif;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 0.25rem 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+/* ── Contenido principal ── */
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1.5fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.profile-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-label {
+  font-family: 'Baskervville SC', serif;
+  font-size: 1rem;
+  color: #adb5bd;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── TOP Game ── */
+.top-game-title {
+  font-family: 'Baskervville SC', serif;
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.top-game-cover {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  max-height: 300px;
+}
+
+.top-game-playtime {
+  font-family: 'Baskervville SC', serif;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  margin: 0;
+  text-align: center;
+}
+
+/* ── Últimos recomendados ── */
+.recent-games-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.recent-game-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.recent-game-title {
+  font-family: 'Baskervville SC', serif;
+  font-size: 0.75rem;
+  color: #e0e0e0;
+  margin: 0;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-game-cover {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+}
+
+/* ── Estadísticas + Gráfico ── */
+.chart-wrapper {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.total-playtime {
+  font-family: 'Baskervville SC', serif;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.btn-biblioteca {
+  display: block;
+  margin-top: auto;
+  padding: 0.6rem 1.5rem;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  background: transparent;
+  border-radius: 4px;
+  font-family: 'Baskervville SC', serif;
+  font-size: 0.95rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-biblioteca:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-games-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

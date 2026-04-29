@@ -1,0 +1,119 @@
+<div class="profile-wrapper">
+  <div class="profile-panel">
+
+    @if (loading()) {
+      <div class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    }
+
+    @if (error()) {
+      <div class="text-center py-5">
+        <p class="text-danger">{{ error() }}</p>
+      </div>
+    }
+
+    @if (!loading() && profile()) {
+
+      <!-- Header: Avatar + Username + Tags -->
+      <div class="profile-header">
+
+        <!-- Avatar clicable -->
+        <div class="profile-avatar-wrapper" (click)="openFilePicker()" title="Cambiar foto de perfil">
+          @if (uploading()) {
+            <div class="avatar-loading">
+              <div class="spinner-border spinner-border-sm text-light" role="status"></div>
+            </div>
+          } @else if (profile()!.user.avatar) {
+            <img class="avatar-img" [src]="profile()!.user.avatar" alt="Avatar" />
+          } @else {
+            <i class="bi bi-person-circle avatar-icon"></i>
+          }
+          <div class="avatar-overlay">
+            <i class="bi bi-camera"></i>
+          </div>
+        </div>
+
+        <!-- Input oculto -->
+        <input #fileInput type="file" accept="image/jpeg,image/png,image/gif,image/webp"
+               style="display:none" (change)="onFileSelected($event)" />
+
+        <div class="profile-identity">
+          <h2 class="profile-username">{{ profile()!.user.username }}</h2>
+          <hr class="profile-divider" />
+          <div class="profile-tags">
+            @for (tag of profile()!.tags; track tag.id) {
+              <span class="profile-tag">{{ tag.name }}</span>
+            }
+            @if (profile()!.tags.length === 0) {
+              <span class="text-secondary fst-italic" style="font-size: 0.85rem;">Sin etiquetas</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido principal: 3 columnas -->
+      <div class="profile-content">
+
+        <!-- Columna 1: TOP Game -->
+        <div class="profile-col profile-top-game">
+          <p class="section-label">TOP Game</p>
+          @if (profile()!.topGame) {
+            <p class="top-game-title">{{ profile()!.topGame!.title }}</p>
+            <img class="top-game-cover"
+                 [src]="profile()!.topGame!.img"
+                 [alt]="profile()!.topGame!.title" />
+            <p class="top-game-playtime">
+              Has jugado<br>
+              <strong>{{ formatPlaytime(profile()!.topGame!.playtime) }}</strong>
+            </p>
+          } @else {
+            <p class="text-secondary fst-italic">Sin juegos registrados</p>
+          }
+        </div>
+
+        <!-- Columna 2: Últimos recomendados -->
+        <div class="profile-col profile-recent">
+          <p class="section-label">Últimos recomendados</p>
+          @if (profile()!.recentGames.length > 0) {
+            <div class="recent-games-row">
+              @for (game of profile()!.recentGames; track game.id) {
+                <div class="recent-game-item">
+                  <p class="recent-game-title">{{ game.title }}</p>
+                  <img class="recent-game-cover"
+                       [src]="game.img"
+                       [alt]="game.title" />
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="text-secondary fst-italic">Sin juegos recientes</p>
+          }
+        </div>
+
+        <!-- Columna 3: Gráfico + estadísticas -->
+        <div class="profile-col profile-stats">
+          <p class="section-label">Que estilo te va más</p>
+          <div class="chart-wrapper">
+            <canvas baseChart
+              [data]="chartData()"
+              [options]="chartOptions"
+              type="doughnut">
+            </canvas>
+          </div>
+          <p class="total-playtime">
+            En total has jugado<br>
+            <strong>{{ formatTotalPlaytime(profile()!.totalPlaytime) }}</strong>
+          </p>
+          <a class="btn-biblioteca" routerLink="/back-log-slayer/games-library">
+            Mi biblioteca
+          </a>
+        </div>
+
+      </div>
+    }
+
+  </div>
+</div>
