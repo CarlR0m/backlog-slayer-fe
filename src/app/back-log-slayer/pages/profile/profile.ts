@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
-import { Observable, of, catchError, startWith, map, tap } from 'rxjs';
+import { Observable, of, catchError, startWith, map, tap, forkJoin } from 'rxjs';
 
 import { ProfileService, UserProfile } from '../../../games/services/profile.service';
 import { GamesService } from '../../../games/services/games.service';
@@ -27,8 +27,10 @@ export class ProfileComponent {
 
   private profileService = inject(ProfileService);
   private gamesService = inject(GamesService);
+  private router = inject(Router);
 
   uploading = signal(false);
+  navigating = signal(false);
   avatarUrl = signal<string | null>(null);
 
   chartOptions: ChartOptions<'doughnut'> = {
@@ -56,6 +58,42 @@ export class ProfileComponent {
     }),
     startWith({ loading: true, error: null, profile: null as UserProfile | null })
   );
+
+  /** Navega al detalle del top game con vista de biblioteca (tiene playtime y status reales) */
+  navigateToTopGame(topGame: NonNullable<UserProfile['mostPlayedGame']>): void {
+    if (this.navigating()) return;
+    this.navigating.set(true);
+
+    forkJoin({
+      fullGame: this.gamesService.getGame(topGame.id),
+      userGames: this.gamesService.getUserGames()
+    }).subscribe({
+      next: ({ fullGame, userGames }) => {
+        const userGame = userGames.find(ug => ug.id === topGame.id) ?? null;
+        this.navigating.set(false);
+        this.router.navigate(['/back-log-slayer/game-detail'], {
+          state: { game: fullGame, userGame }
+        });
+      },
+      error: () => { this.navigating.set(false); }
+    });
+  }
+
+  /** Navega al detalle de un juego recomendado con vista de catálogo (sin datos de biblioteca) */
+  navigateToRecentGame(game: UserProfile['recentGames'][number]): void {
+    if (this.navigating()) return;
+    this.navigating.set(true);
+
+    this.gamesService.getGame(game.id).subscribe({
+      next: (fullGame) => {
+        this.navigating.set(false);
+        this.router.navigate(['/back-log-slayer/game-detail'], {
+          state: { game: fullGame }
+        });
+      },
+      error: () => { this.navigating.set(false); }
+    });
+  }
 
   openFilePicker(): void {
     this.fileInput.nativeElement.click();
