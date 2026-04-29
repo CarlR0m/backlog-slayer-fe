@@ -23,6 +23,7 @@ export class GameDetail implements OnInit {
   readonly pageState = signal<PageState>('error');
   readonly game = signal<Game | null>(null);
   readonly userGame = signal<UserGame | null>(null);
+  readonly from = signal<string>('');
 
   readonly isLibraryGame = computed(() => this.userGame() !== null);
 
@@ -43,7 +44,7 @@ export class GameDetail implements OnInit {
   }
 
   private loadGame(): void {
-    const historyState = history.state as { game?: Game; userGame?: UserGame };
+    const historyState = history.state as { game?: Game; userGame?: UserGame; from?: string };
 
     const gameFromState = historyState?.game;
     const userGameFromState = historyState?.userGame;
@@ -57,11 +58,16 @@ export class GameDetail implements OnInit {
     if (userGameFromState) {
       this.userGame.set(userGameFromState);
     }
+    if (historyState?.from) {
+      this.from.set(historyState.from);
+    }
     this.pageState.set('ready');
   }
 
   goBack(): void {
-    if (this.isLibraryGame()) {
+    if (this.from() === 'profile') {
+      this.router.navigate(['/back-log-slayer/profile']);
+    } else if (this.isLibraryGame()) {
       this.router.navigate(['/back-log-slayer/games-library']);
     } else {
       this.router.navigate(['/back-log-slayer/all-games']);

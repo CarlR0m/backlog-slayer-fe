@@ -72,7 +72,7 @@ export class ProfileComponent {
         const userGame = userGames.find(ug => ug.id === topGame.id) ?? null;
         this.navigating.set(false);
         this.router.navigate(['/back-log-slayer/game-detail'], {
-          state: { game: fullGame, userGame }
+          state: { game: fullGame, userGame, from: 'profile' }
         });
       },
       error: () => { this.navigating.set(false); }
@@ -88,7 +88,7 @@ export class ProfileComponent {
       next: (fullGame) => {
         this.navigating.set(false);
         this.router.navigate(['/back-log-slayer/game-detail'], {
-          state: { game: fullGame }
+          state: { game: fullGame, from: 'profile' }
         });
       },
       error: () => { this.navigating.set(false); }
