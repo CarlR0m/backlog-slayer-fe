@@ -10,6 +10,7 @@ import { AuthService } from '../../auth/services/auth.service';
 
 export interface UserProfile {
   name: string;
+  avatar: string | null;
   steamId: string | null;
   tags: string[];
   mostPlayedGame: {
@@ -44,6 +45,7 @@ interface ApiProfileResponse {
     id: number;
     username: string;
     steam_id: string | null;
+    avatar: string | null;
   };
   tags: {
     id: number;
@@ -109,6 +111,7 @@ export class ProfileService {
   private mapToUserProfile(api: ApiProfileResponse): UserProfile {
     return {
       name: api.user.username,
+      avatar: api.user.avatar,
       steamId: api.user.steam_id,
       tags: api.tags.map(tag => tag.name),
       mostPlayedGame: api.topGame ? {

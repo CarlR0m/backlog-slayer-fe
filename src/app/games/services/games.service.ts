@@ -34,4 +34,10 @@ export class GamesService {
   getUserProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(`${this.apiUrl}/user/profile`);
   }
+
+  uploadAvatar(file: File): Observable<{ avatar: string }> {
+    const form = new FormData();
+    form.append('avatar', file);
+    return this.http.post<{ avatar: string }>(`${this.apiUrl}/user/avatar`, form);
+  }
 }

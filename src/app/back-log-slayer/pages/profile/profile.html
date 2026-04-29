@@ -1,11 +1,30 @@
 <div class="profile-container">
-  
+
   <!-- ROW 1: HEADER -->
   <header class="header">
     <ng-container *ngIf="vm$ | async as vm">
       <ng-container *ngIf="!vm.loading && !vm.error && vm.profile; else noProfile">
-        <!-- Avatar fallback: inicial del username -->
-        <div class="avatar-fallback">{{ vm.profile.name.charAt(0).toUpperCase() }}</div>
+
+        <!-- Avatar clicable con overlay de cámara -->
+        <div class="avatar-wrapper" (click)="openFilePicker()" title="Cambiar foto de perfil">
+          @if (uploading()) {
+            <div class="avatar-loading">
+              <div class="spinner-border spinner-border-sm text-light" role="status"></div>
+            </div>
+          } @else if (avatarUrl()) {
+            <img class="avatar-img" [src]="avatarUrl()!" alt="Avatar" />
+          } @else {
+            <div class="avatar-fallback">{{ vm.profile.name.charAt(0).toUpperCase() }}</div>
+          }
+          <div class="avatar-overlay">
+            <i class="bi bi-camera"></i>
+          </div>
+        </div>
+
+        <!-- Input oculto para seleccionar imagen -->
+        <input #fileInput type="file" accept="image/jpeg,image/png,image/gif,image/webp"
+               style="display:none" (change)="onFileSelected($event)" />
+
         <div class="user-info">
           <h2 class="username">{{ vm.profile.name }}</h2>
           <div class="tags">
@@ -30,7 +49,7 @@
   <!-- ROW 2: MAIN CONTENT -->
   <main class="content">
     <ng-container *ngIf="vm$ | async as vm">
-      
+
       <!-- LEFT COLUMN: Most Played Game -->
       <div class="left">
         <h3 class="column-title">Juego Principal</h3>
@@ -67,18 +86,13 @@
       <!-- RIGHT COLUMN: Statistics Chart -->
       <div class="right">
         <h3 class="column-title">Estadísticas</h3>
-        <ng-container *ngIf="vm.profile?.statistics?.datasets as datasets; else noStats">
+        <ng-container *ngIf="vm.profile?.statistics?.labels?.length; else noStats">
           <div class="chart-container">
-            <!-- Placeholder preparado para Chart.js -->
-            <!-- Los datos están disponibles en vm.profile.statistics para integración futura -->
-            <div class="chart-placeholder">
-              <span>Estadísticas disponibles</span>
-              <div class="stats-preview">
-                <span *ngFor="let dataset of datasets">
-                  {{ dataset.label }}: {{ dataset.data.length }} datos
-                </span>
-              </div>
-            </div>
+            <canvas baseChart
+              [data]="getChartData(vm.profile)"
+              [options]="chartOptions"
+              type="doughnut">
+            </canvas>
           </div>
         </ng-container>
         <ng-template #noStats>
@@ -86,7 +100,7 @@
             <span>Sin datos de estadísticas</span>
           </div>
         </ng-template>
-        <button class="library-btn">Mi biblioteca</button>
+        <a class="library-btn" routerLink="/back-log-slayer/games-library">Mi biblioteca</a>
       </div>
 
     </ng-container>

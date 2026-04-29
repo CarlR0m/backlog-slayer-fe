@@ -18,7 +18,17 @@
   border-radius: 12px;
 }
 
-/* Avatar fallback - inicial del username */
+/* Avatar clicable */
+.avatar-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .avatar-fallback {
   width: 80px;
   height: 80px;
@@ -30,6 +40,42 @@
   font-size: 2rem;
   font-weight: bold;
   color: #fff;
+}
+
+.avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-loading {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.avatar-wrapper:hover .avatar-overlay {
+  opacity: 1;
 }
 
 .user-info {
@@ -185,6 +231,7 @@
 }
 
 .library-btn {
+  display: block;
   background-color: #4a90e2;
   color: #fff;
   border: none;
@@ -194,10 +241,14 @@
   cursor: pointer;
   font-family: 'Baskervville', serif;
   width: 100%;
+  text-align: center;
+  text-decoration: none;
+  margin-top: auto;
 }
 
 .library-btn:hover {
   background-color: #357abd;
+  color: #fff;
 }
 
 /* PLACEHOLDERS */
