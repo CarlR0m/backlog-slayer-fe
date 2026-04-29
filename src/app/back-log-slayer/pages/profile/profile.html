@@ -2,64 +2,94 @@
   
   <!-- ROW 1: HEADER -->
   <header class="header">
-    <ng-container *ngIf="profile$ | async as profile; else noProfile">
-      <img class="avatar" [src]="profile.avatar" [alt]="profile.name" />
-      <div class="user-info">
-        <h2 class="username">{{ profile.name }}</h2>
-        <div class="tags">
-          <span class="tag" *ngFor="let tag of profile.tags">{{ tag }}</span>
+    <ng-container *ngIf="vm$ | async as vm">
+      <ng-container *ngIf="!vm.loading && !vm.error && vm.profile; else noProfile">
+        <!-- Avatar fallback: inicial del username -->
+        <div class="avatar-fallback">{{ vm.profile.name.charAt(0).toUpperCase() }}</div>
+        <div class="user-info">
+          <h2 class="username">{{ vm.profile.name }}</h2>
+          <div class="tags">
+            <span class="tag" *ngFor="let tag of vm.profile.tags">{{ tag }}</span>
+          </div>
+          <div class="playtime" *ngIf="vm.profile.totalPlaytime > 0">
+            <span class="playtime-label">Tiempo de juego:</span>
+            <span class="playtime-value">{{ formatPlaytime(vm.profile.totalPlaytime) }}</span>
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #noProfile>
+        <div class="no-data-placeholder">
+          <p *ngIf="vm.loading">Cargando perfil...</p>
+          <p *ngIf="!vm.loading && vm.error" class="error-message">{{ vm.error }}</p>
+          <p *ngIf="!vm.loading && !vm.error">Inicia sesión para ver tu perfil</p>
+        </div>
+      </ng-template>
     </ng-container>
-    <ng-template #noProfile>
-      <div class="no-data-placeholder">
-        <p>Inicia sesión para ver tu perfil</p>
-      </div>
-    </ng-template>
   </header>
 
   <!-- ROW 2: MAIN CONTENT -->
   <main class="content">
-    
-    <!-- LEFT COLUMN: Most Played Game -->
-    <div class="left">
-      <h3 class="column-title">Juego Principal</h3>
-      <ng-container *ngIf="profile$ | async as profile">
-        <img class="main-game" [src]="profile.mostPlayedGame.image" [alt]="profile.mostPlayedGame.title" />
-        <p class="game-title">{{ profile.mostPlayedGame.title }}</p>
-      </ng-container>
-      <ng-container *ngIf="(profile$ | async) === null">
-        <div class="no-data-placeholder">
-          <p>No hay datos del juego principal</p>
-        </div>
-      </ng-container>
-    </div>
-
-    <!-- CENTER COLUMN: Recommended Games -->
-    <div class="center">
-      <h3 class="column-title">Juegos Recomendados</h3>
-      <ng-container *ngIf="profile$ | async as profile">
-        <div class="recommended-item" *ngFor="let game of profile.recommendedGames">
-          <img [src]="game.image" [alt]="game.title" />
-          <span>{{ game.title }}</span>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="(profile$ | async) === null">
-        <div class="no-data-placeholder">
-          <p>No hay juegos recomendados</p>
-        </div>
-      </ng-container>
-    </div>
-
-    <!-- RIGHT COLUMN: Chart + Button -->
-    <div class="right">
-      <h3 class="column-title">Estadísticas</h3>
-      <div class="chart-placeholder">
-        <span>Chart coming soon</span>
+    <ng-container *ngIf="vm$ | async as vm">
+      
+      <!-- LEFT COLUMN: Most Played Game -->
+      <div class="left">
+        <h3 class="column-title">Juego Principal</h3>
+        <ng-container *ngIf="vm.profile?.mostPlayedGame as mainGame; else noMainGame">
+          <img class="main-game" [src]="mainGame.image" [alt]="mainGame.title" />
+          <p class="game-title">{{ mainGame.title }}</p>
+          <p class="game-playtime" *ngIf="mainGame.playtime > 0">
+            {{ formatPlaytime(mainGame.playtime) }}
+          </p>
+        </ng-container>
+        <ng-template #noMainGame>
+          <div class="no-data-placeholder">
+            <p>No hay datos del juego principal</p>
+          </div>
+        </ng-template>
       </div>
-      <button class="library-btn">Mi biblioteca</button>
-    </div>
 
+      <!-- CENTER COLUMN: Recent Games -->
+      <div class="center">
+        <h3 class="column-title">Juegos Recientes</h3>
+        <ng-container *ngIf="vm.profile?.recentGames as recentGames; else noRecentGames">
+          <div class="recommended-item" *ngFor="let game of recentGames">
+            <img [src]="game.image" [alt]="game.title" />
+            <span>{{ game.title }}</span>
+          </div>
+        </ng-container>
+        <ng-template #noRecentGames>
+          <div class="no-data-placeholder">
+            <p>No hay juegos recientes</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- RIGHT COLUMN: Statistics Chart -->
+      <div class="right">
+        <h3 class="column-title">Estadísticas</h3>
+        <ng-container *ngIf="vm.profile?.statistics?.datasets as datasets; else noStats">
+          <div class="chart-container">
+            <!-- Placeholder preparado para Chart.js -->
+            <!-- Los datos están disponibles en vm.profile.statistics para integración futura -->
+            <div class="chart-placeholder">
+              <span>Estadísticas disponibles</span>
+              <div class="stats-preview">
+                <span *ngFor="let dataset of datasets">
+                  {{ dataset.label }}: {{ dataset.data.length }} datos
+                </span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noStats>
+          <div class="chart-placeholder">
+            <span>Sin datos de estadísticas</span>
+          </div>
+        </ng-template>
+        <button class="library-btn">Mi biblioteca</button>
+      </div>
+
+    </ng-container>
   </main>
 
 </div>
