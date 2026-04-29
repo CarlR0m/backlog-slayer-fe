@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Observable, of, catchError, startWith, map } from 'rxjs';
 
 import { ProfileService, UserProfile } from '../../../games/services/profile.service';
@@ -17,7 +16,7 @@ export interface ProfileViewModel {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
