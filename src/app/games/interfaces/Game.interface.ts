@@ -132,3 +132,51 @@ export interface GameSummary {
   topGame: TopGame | null;
   recentHistory: never[];
 }
+
+/**
+ * @interface PaginatedGames
+ * @description Respuesta paginada del los juegos de la base de datos
+ * @property {Game[]} data - Lista de juegos de la página actual
+ * @property {number} current_page - Página actual
+ * @property {number} last_page - Última página disponible
+ * @property {number} per_page - Resultados por página
+ * @property {number} total - Total de juegos en la BD
+ */
+export interface PaginatedGames {
+  data: Game[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+export interface ProfileGame {
+  id: number;
+  title: string;
+  img: string;
+}
+
+export interface ProfileTopGame extends ProfileGame {
+  playtime: number; // minutos totales jugados
+}
+
+export interface UserProfile {
+  user: {
+    id: number;
+    username: string;
+    steam_id: string | null;
+  };
+  tags: { id: number; name: string }[];
+  topGame: ProfileTopGame | null;
+  recentGames: ProfileGame[];
+  totalPlaytime: number; // minutos totales de toda la biblioteca
+  statistics: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string[];
+      hoverOffset: number;
+    }[];
+  };
+}

@@ -6,6 +6,8 @@ import { Survey } from './pages/survey/survey';
 import { GameRecommendation } from './pages/game-recommendation/game-recommendation';
 import { OtherGames } from './pages/other-games/other-games';
 import { GamesLibrary } from './pages/games-library/games-library';
+import { GameDetail } from './pages/game-detail/game-detail';
+import { AllGames } from './pages/all-games/all-games';
 import { authGuard } from '../auth/guards/auth.guard';
 import { ProfileComponent } from './pages/profile/profile';
 
@@ -30,12 +32,22 @@ const backLogSlayerRoutes: Routes = [
         component: OtherGames,
         title: 'Otros Juegos',
       },
+      {
+        path: 'game-detail',
+        component: GameDetail,
+        title: 'Detalle del Juego',
+      },
+      {
+        path: 'all-games',
+        component: AllGames,
+        title: 'Todos los Juegos',
+      },
       //Vistas Privadas
       {
         path: 'steam-sync',
         component: SteamCallBack,
-        title: 'Sincronización con Steam'
-        //Añadir guard
+        title: 'Sincronización con Steam',
+        canMatch: [authGuard]
       },
       {
         path: 'games-library',
