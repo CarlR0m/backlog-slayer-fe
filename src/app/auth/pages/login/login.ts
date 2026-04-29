@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.html',
+  styleUrl: './login.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {

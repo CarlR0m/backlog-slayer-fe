@@ -1,0 +1,68 @@
+<div class="library-wrapper">
+  <div class="library-panel">
+
+    <!-- Header de perfil -->
+    <div class="library-header">
+      <div class="library-avatar">
+        <i class="bi bi-person-circle"></i>
+      </div>
+      <div class="library-user-info">
+        <h2 class="library-username">{{ authService.user()?.username }}</h2>
+        <span class="library-subtitle">Mi biblioteca</span>
+        <hr class="library-divider" />
+      </div>
+    </div>
+
+    <!-- Cargando -->
+    @if (loading()) {
+      <div class="d-flex justify-content-center py-5">
+        <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    }
+
+    <!-- Grid de juegos -->
+    @if (!loading() && games().length > 0) {
+      <div class="library-grid">
+        @for (game of games(); track game.id) {
+          <app-game-card [game]="game" />
+        }
+      </div>
+    }
+
+    <!-- Estado vacío -->
+    @if (!loading() && games().length === 0 && !error()) {
+      <div class="library-empty">
+        <i class="bi bi-controller fs-1 mb-3 d-block text-secondary"></i>
+        <p class="text-secondary mb-3">Aún no tienes juegos en tu biblioteca.</p>
+        <button class="btn btn-primary px-4 rounded-pill"
+                data-bs-toggle="modal" data-bs-target="#gameImportModal">
+          Sincronizar con Steam
+        </button>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (error()) {
+      <div class="library-empty">
+        <p class="text-danger">{{ error() }}</p>
+      </div>
+    }
+
+    <!-- Footer con botón Importar -->
+    @if (!loading() && games().length > 0) {
+      <div class="library-footer">
+        <a class="btn btn-outline-light px-4 rounded-pill"
+           routerLink="/back-log-slayer/survey">
+          ¿A qué quieres jugar?
+        </a>
+        <button class="btn btn-primary px-4 rounded-pill"
+                data-bs-toggle="modal" data-bs-target="#gameImportModal">
+          Importar
+        </button>
+      </div>
+    }
+
+  </div>
+</div>

@@ -8,6 +8,7 @@ import { getFieldErrorMsg, setServerErrors } from '../../../shared/utils/form-ut
   selector: 'app-register',
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './register.html',
+  styleUrl: './register.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {

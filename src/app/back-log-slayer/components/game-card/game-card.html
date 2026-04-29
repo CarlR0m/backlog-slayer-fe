@@ -1,0 +1,25 @@
+<div
+  class="game-card"
+  [class.game-card--loading]="loading()"
+  (click)="navigateToDetail()"
+  role="button"
+  [attr.aria-label]="'Ver detalle de ' + game().title"
+>
+  <div class="game-card-cover-wrapper">
+    <img
+      [src]="game().cover_image_url"
+      [alt]="game().title"
+      class="game-card-cover"
+      loading="lazy"
+      (error)="$any($event.target).src='https://placehold.co/200x300?text=Sin+imagen'"
+    />
+    @if (loading()) {
+      <div class="game-card-overlay">
+        <div class="spinner-border spinner-border-sm text-light" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    }
+  </div>
+  <p class="game-card-title" [title]="game().title">{{ game().title }}</p>
+</div>

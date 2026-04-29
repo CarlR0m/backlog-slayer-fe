@@ -1,0 +1,8 @@
+.auth-form-bg {
+  background: #0e0e0e;
+}
+
+.logo-small {
+  width: 104px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}

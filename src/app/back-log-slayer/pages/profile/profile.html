@@ -1,0 +1,117 @@
+<div class="profile-container">
+
+  <!-- ROW 1: HEADER -->
+  <header class="header">
+    <ng-container *ngIf="vm$ | async as vm">
+      <ng-container *ngIf="!vm.loading && !vm.error && vm.profile; else noProfile">
+
+        <!-- Avatar clicable con overlay de cámara -->
+        <div class="avatar-wrapper" (click)="openFilePicker()" title="Cambiar foto de perfil">
+          @if (uploading()) {
+            <div class="avatar-loading">
+              <div class="spinner-border spinner-border-sm text-light" role="status"></div>
+            </div>
+          } @else if (avatarUrl()) {
+            <img class="avatar-img" [src]="avatarUrl()!" alt="Avatar" />
+          } @else {
+            <div class="avatar-fallback">{{ vm.profile.name.charAt(0).toUpperCase() }}</div>
+          }
+          <div class="avatar-overlay">
+            <i class="bi bi-camera"></i>
+          </div>
+        </div>
+
+        <!-- Input oculto para seleccionar imagen -->
+        <input #fileInput type="file" accept="image/jpeg,image/png,image/gif,image/webp"
+               style="display:none" (change)="onFileSelected($event)" />
+
+        <div class="user-info">
+          <h2 class="username">{{ vm.profile.name }}</h2>
+          <div class="tags">
+            <span class="tag" *ngFor="let tag of vm.profile.tags">{{ tag }}</span>
+          </div>
+          <div class="playtime" *ngIf="vm.profile.totalPlaytime > 0">
+            <span class="playtime-label">Tiempo de juego:</span>
+            <span class="playtime-value">{{ formatPlaytime(vm.profile.totalPlaytime) }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noProfile>
+        <div class="no-data-placeholder">
+          <p *ngIf="vm.loading">Cargando perfil...</p>
+          <p *ngIf="!vm.loading && vm.error" class="error-message">{{ vm.error }}</p>
+          <p *ngIf="!vm.loading && !vm.error">Inicia sesión para ver tu perfil</p>
+        </div>
+      </ng-template>
+    </ng-container>
+  </header>
+
+  <!-- ROW 2: MAIN CONTENT -->
+  <main class="content">
+    <ng-container *ngIf="vm$ | async as vm">
+
+      <!-- LEFT COLUMN: Most Played Game -->
+      <div class="left">
+        <h3 class="column-title">Juego Principal</h3>
+        <ng-container *ngIf="vm.profile?.mostPlayedGame as mainGame; else noMainGame">
+          <div class="game-clickable" (click)="navigateToTopGame(mainGame)" [class.is-navigating]="navigating()">
+            @if (navigating()) {
+              <div class="game-nav-overlay">
+                <div class="spinner-border spinner-border-sm text-light" role="status"></div>
+              </div>
+            }
+            <img class="main-game" [src]="mainGame.image" [alt]="mainGame.title" />
+            <p class="game-title">{{ mainGame.title }}</p>
+            <p class="game-playtime" *ngIf="mainGame.playtime > 0">
+              {{ formatPlaytime(mainGame.playtime) }}
+            </p>
+          </div>
+        </ng-container>
+        <ng-template #noMainGame>
+          <div class="no-data-placeholder">
+            <p>No hay datos del juego principal</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- CENTER COLUMN: Recent Games -->
+      <div class="center">
+        <h3 class="column-title">Juegos Recientes</h3>
+        <ng-container *ngIf="vm.profile?.recentGames as recentGames; else noRecentGames">
+          <div class="recommended-item" *ngFor="let game of recentGames"
+               (click)="navigateToRecentGame(game)" [class.is-navigating]="navigating()">
+            <img [src]="game.image" [alt]="game.title" />
+            <span>{{ game.title }}</span>
+          </div>
+        </ng-container>
+        <ng-template #noRecentGames>
+          <div class="no-data-placeholder">
+            <p>No hay juegos recientes</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- RIGHT COLUMN: Statistics Chart -->
+      <div class="right">
+        <h3 class="column-title">Estadísticas</h3>
+        <ng-container *ngIf="vm.profile?.statistics?.labels?.length; else noStats">
+          <div class="chart-container">
+            <canvas baseChart
+              [data]="getChartData(vm.profile)"
+              [options]="chartOptions"
+              type="doughnut">
+            </canvas>
+          </div>
+        </ng-container>
+        <ng-template #noStats>
+          <div class="chart-placeholder">
+            <span>Sin datos de estadísticas</span>
+          </div>
+        </ng-template>
+        <a class="library-btn" routerLink="/back-log-slayer/games-library">Mi biblioteca</a>
+      </div>
+
+    </ng-container>
+  </main>
+
+</div>

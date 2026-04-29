@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'auth-banner',
   imports: [],
   templateUrl: './auth-banner.html',
+  styleUrl: './auth-banner.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthBanner {

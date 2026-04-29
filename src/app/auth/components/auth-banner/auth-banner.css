@@ -1,0 +1,16 @@
+.banner-content {
+  width: 85%;
+}
+
+.banner-logo {
+  width: 100%;
+  max-width: 546px;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.7));
+}
+
+.banner-tagline {
+  font-size: 2rem;
+  font-style: normal;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  margin-top: 1rem;
+}

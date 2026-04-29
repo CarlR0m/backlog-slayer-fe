@@ -8,6 +8,7 @@ import { Footer } from '../../components/footer/footer';
   selector: 'main-layot',
   imports: [Navbar, Footer, RouterOutlet],
   templateUrl: './main-layot.html',
+  styleUrl: './main-layot.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayot { }
