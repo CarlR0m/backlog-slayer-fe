@@ -127,6 +127,15 @@ export class ProfileComponent {
     };
   }
 
+  getChartColor(profile: UserProfile | null, index: number): string {
+    const colors = profile?.statistics?.datasets?.[0]?.backgroundColor;
+    return Array.isArray(colors) ? (colors[index] ?? '#888') : '#888';
+  }
+
+  getChartValue(profile: UserProfile | null, index: number): number {
+    return profile?.statistics?.datasets?.[0]?.data?.[index] ?? 0;
+  }
+
   formatPlaytime(minutes: number): string {
     if (!minutes || minutes <= 0) return '0h';
     const hours = Math.floor(minutes / 60);
