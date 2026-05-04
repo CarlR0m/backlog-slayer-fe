@@ -1,29 +1,31 @@
-<footer class="bg-dark text-white mt-5">
-  <div class="container py-4">
-    <div class="row">
-      <div class="col-md-4">
-        <h5>Backlog Slayer</h5>
-        <p>Descubre tu próximo videojuego favorito. Explora, recibe recomendaciones personalizadas y gestiona tu biblioteca de juegos.</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div>
+        <h5 class="footer-heading">Backlog Slayer</h5>
+        <p class="footer-text">Descubre tu próximo videojuego favorito. Explora, recibe recomendaciones personalizadas y gestiona tu biblioteca de juegos.</p>
       </div>
-      <div class="col-md-4">
-        <h5>Enlaces</h5>
-        <ul class="list-unstyled">
-          <li><a routerLink="/back-log-slayer/survey" class="text-white">Inicio</a></li>
-          <li><a routerLink="/back-log-slayer/all-games" class="text-white">Todos los juegos</a></li>
-          <li><a routerLink="/back-log-slayer/games-library" class="text-white">Mi biblioteca</a></li>
-          <li><a routerLink="/auth/login" class="text-white">Iniciar sesión</a></li>
-          <li><a routerLink="/auth/register" class="text-white">Registrarse</a></li>
+
+      <div>
+        <h5 class="footer-heading">Enlaces</h5>
+        <ul class="footer-nav">
+          <li><a routerLink="/back-log-slayer/survey" class="footer-link">Inicio</a></li>
+          <li><a routerLink="/back-log-slayer/all-games" class="footer-link">Todos los juegos</a></li>
+          <li><a routerLink="/back-log-slayer/games-library" class="footer-link">Mi biblioteca</a></li>
+          <li><a routerLink="/auth/login" class="footer-link">Iniciar sesión</a></li>
+          <li><a routerLink="/auth/register" class="footer-link">Registrarse</a></li>
         </ul>
       </div>
-      <div class="col-md-4">
-        <h5>Contacto</h5>
-        <p>Email: backlogslayer&#64;gmail.com</p>
+
+      <div>
+        <h5 class="footer-heading">Contacto</h5>
+        <p class="footer-text">backlogslayer&#64;gmail.com</p>
       </div>
+
     </div>
-    <div class="row mt-3">
-      <div class="col-12 text-center">
-        <p>&copy; {{year}} Backlog Slayer. Todos los derechos reservados.</p>
-      </div>
+    <div class="footer-bottom">
+      &copy; {{ year }} Backlog Slayer. Todos los derechos reservados.
     </div>
   </div>
 </footer>

@@ -1,4 +1,51 @@
-.content-wrapper {
+.rec-page-wrapper {
+  min-height: 0;
+}
+
+.rec-content-wrapper {
   width: 100%;
   max-width: 1100px;
+}
+
+.rec-error-card {
+  background: rgba(28, 28, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 3.5rem 2.5rem;
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.5);
+  color: #e0e0e0;
+}
+
+.rec-error-icon {
+  font-size: 3.5rem;
+  color: #495057;
+}
+
+.rec-error-title {
+  font-family: 'Baskervville SC', serif;
+  font-size: 1.4rem;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+
+.rec-error-text {
+  color: #6c757d;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.rec-survey-btn {
+  background: linear-gradient(135deg, #4a90e2 0%, #6c5ce7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 0.6rem 2rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.rec-survey-btn:hover {
+  opacity: 0.85;
 }
