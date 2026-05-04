@@ -1,17 +1,18 @@
 <div class="library-wrapper">
   <div class="library-panel">
 
-    <!-- Header de perfil -->
-    <div class="library-header">
-      <div class="library-avatar">
+    <!-- Header -->
+    <div class="panel-header">
+      <div class="panel-icon">
         <i class="bi bi-person-circle"></i>
       </div>
-      <div class="library-user-info">
-        <h2 class="library-username">{{ authService.user()?.username }}</h2>
-        <span class="library-subtitle">Mi biblioteca</span>
-        <hr class="library-divider" />
+      <div class="panel-title-block">
+        <h2 class="panel-title">{{ authService.user()?.username }}</h2>
+        <span class="panel-subtitle">Mi biblioteca</span>
       </div>
     </div>
+
+    <div class="panel-divider"></div>
 
     <!-- Cargando -->
     @if (loading()) {
@@ -24,19 +25,38 @@
 
     <!-- Grid de juegos -->
     @if (!loading() && games().length > 0) {
-      <div class="library-grid">
-        @for (game of games(); track game.id) {
+      <div class="games-grid">
+        @for (game of pagedGames(); track game.id) {
           <app-game-card [game]="game" />
         }
       </div>
+
+      <!-- Paginación -->
+      @if (totalPages() > 1) {
+        <div class="pg-bar">
+          <button class="pg-btn" [disabled]="currentPage() === 1" (click)="prevPage()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          @for (p of visiblePages(); track $index) {
+            @if (p === null) {
+              <span class="pg-ellipsis">…</span>
+            } @else {
+              <button class="pg-btn" [class.pg-btn--active]="p === currentPage()" (click)="goToPage(p)">{{ p }}</button>
+            }
+          }
+          <button class="pg-btn" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      }
     }
 
     <!-- Estado vacío -->
     @if (!loading() && games().length === 0 && !error()) {
-      <div class="library-empty">
-        <i class="bi bi-controller fs-1 mb-3 d-block text-secondary"></i>
-        <p class="text-secondary mb-3">Aún no tienes juegos en tu biblioteca.</p>
-        <button class="btn btn-primary px-4 rounded-pill"
+      <div class="panel-empty">
+        <i class="bi bi-controller panel-empty-icon mb-3 d-block"></i>
+        <p class="panel-empty-text mb-4">Aún no tienes juegos en tu biblioteca.</p>
+        <button class="pg-action-btn"
                 data-bs-toggle="modal" data-bs-target="#gameImportModal">
           Sincronizar con Steam
         </button>
@@ -45,19 +65,18 @@
 
     <!-- Error -->
     @if (error()) {
-      <div class="library-empty">
-        <p class="text-danger">{{ error() }}</p>
+      <div class="panel-empty">
+        <p style="color: #e74c3c;">{{ error() }}</p>
       </div>
     }
 
-    <!-- Footer con botón Importar -->
+    <!-- Footer -->
     @if (!loading() && games().length > 0) {
-      <div class="library-footer">
-        <a class="btn btn-outline-light px-4 rounded-pill"
-           routerLink="/back-log-slayer/survey">
+      <div class="panel-footer">
+        <a class="pg-survey-btn" routerLink="/back-log-slayer/survey">
           ¿A qué quieres jugar?
         </a>
-        <button class="btn btn-primary px-4 rounded-pill"
+        <button class="pg-action-btn"
                 data-bs-toggle="modal" data-bs-target="#gameImportModal">
           Importar
         </button>

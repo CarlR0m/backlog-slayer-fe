@@ -1,6 +1,6 @@
 .profile-container {
   display: grid;
-  grid-template-rows: 15vh 1fr;
+  grid-template-rows: auto 1fr;
   gap: 20px;
   min-height: 85vh;
   padding: 20px;
@@ -13,12 +13,14 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 20px;
-  background-color: #252525ee;
-  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  background: rgba(28, 28, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Avatar clicable */
+/* Avatar */
 .avatar-wrapper {
   position: relative;
   width: 80px;
@@ -27,13 +29,14 @@
   cursor: pointer;
   border-radius: 50%;
   overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .avatar-fallback {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #4a90e2;
+  background: linear-gradient(135deg, #4a90e2 0%, #6c5ce7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,7 +67,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,27 +86,30 @@
 }
 
 .username {
-  font-size: 1.5rem;
+  font-family: 'Baskervville SC', serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
   margin: 0 0 10px 0;
 }
 
 .tags {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .tag {
-  background-color: #4a4a4a;
-  padding: 5px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #d0d0d0;
+  font-size: 0.78rem;
+  padding: 0.22rem 0.65rem;
   border-radius: 20px;
-  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* Tiempo de juego */
 .playtime {
   margin-top: 10px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: #aaa;
 }
 
@@ -116,7 +122,6 @@
   font-weight: bold;
 }
 
-/* Error message */
 .error-message {
   color: #e74c3c;
   font-weight: bold;
@@ -127,45 +132,58 @@
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 20px;
+  align-items: start;
 }
 
 .column-title {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+  font-family: 'Baskervville SC', serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #fff;
-  border-bottom: 2px solid #4a90e2;
-  padding-bottom: 8px;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* LEFT COLUMN */
 .left {
-  background-color: #252525ee;
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(28, 28, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
 }
 
 .main-game {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-clickable:hover .main-game {
+  transform: scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
 }
 
 .game-title {
   text-align: center;
   margin-top: 10px;
   font-size: 1rem;
+  color: #e0e0e0;
 }
 
 .game-playtime {
   text-align: center;
   font-size: 0.85rem;
-  color: #aaa;
-  margin-top: 5px;
+  color: #6c757d;
+  margin-top: 4px;
 }
 
-/* Juegos clicables */
 .game-clickable {
   position: relative;
   cursor: pointer;
@@ -173,20 +191,14 @@
   flex-direction: column;
 }
 
-.game-clickable:hover .main-game,
-.game-clickable:hover img {
-  opacity: 0.8;
-  transition: opacity 0.2s;
-}
-
 .game-nav-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 10px;
   z-index: 1;
 }
 
@@ -196,45 +208,56 @@
 
 /* CENTER COLUMN */
 .center {
-  background-color: #252525ee;
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(28, 28, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  padding: 1.25rem;
 }
 
 .recommended-item {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #1a1a1a;
-  border-radius: 8px;
+  gap: 14px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .recommended-item:hover {
-  background-color: #2a2a2a;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .recommended-item img {
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   border-radius: 8px;
   object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .recommended-item span {
-  font-size: 1rem;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+  line-height: 1.4;
 }
 
 /* RIGHT COLUMN */
 .right {
-  background-color: #252525ee;
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(28, 28, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
 }
 
 .chart-placeholder {
@@ -243,11 +266,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 200px;
-  color: #888;
-  background-color: #1a1a1a;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  min-height: 160px;
+  color: #495057;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
 }
 
 .chart-container {
@@ -256,31 +278,10 @@
   flex-direction: column;
 }
 
-.stats-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
-  margin: 10px 0;
-  font-size: 0.9rem;
-}
-
-.stats-total-label {
-  color: #aaa;
-}
-
-.stats-total-value {
-  color: #4a90e2;
-  font-weight: bold;
-}
-
 .chart-legend {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 5px;
   font-size: 0.82rem;
 }
 
@@ -291,68 +292,79 @@
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .legend-label {
   flex: 1;
-  color: #ccc;
+  color: #adb5bd;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .legend-value {
-  color: #aaa;
+  color: #6c757d;
   flex-shrink: 0;
 }
 
 .library-btn {
   display: block;
-  background-color: #4a90e2;
+  background: linear-gradient(135deg, #4a90e2 0%, #6c5ce7 100%);
   color: #fff;
   border: none;
-  padding: 12px 30px;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   font-family: 'Baskervville', serif;
   width: 100%;
   text-align: center;
   text-decoration: none;
   margin-top: auto;
+  transition: opacity 0.15s;
 }
 
 .library-btn:hover {
-  background-color: #357abd;
+  opacity: 0.85;
   color: #fff;
 }
 
-/* PLACEHOLDERS */
 .no-data-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #888;
+  color: #495057;
   text-align: center;
-  padding: 20px;
+  padding: 1.5rem;
+  min-height: 100px;
 }
 
-/* RESPONSIVE DESIGN */
-@media (max-width: 768px) {
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .right {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
   .profile-container {
-    grid-template-rows: auto 1fr;
-    padding: 10px;
+    padding: 12px;
   }
 
   .header {
     flex-direction: column;
     text-align: center;
-    padding: 15px;
+    padding: 1.25rem;
   }
 
   .tags {
@@ -361,24 +373,5 @@
 
   .content {
     grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  .left,
-  .center,
-  .right {
-    min-height: auto;
-    padding: 15px;
-  }
-
-  .recommended-item {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .recommended-item img {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
   }
 }
