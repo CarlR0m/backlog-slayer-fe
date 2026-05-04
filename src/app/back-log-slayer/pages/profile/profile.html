@@ -74,19 +74,24 @@
         </ng-template>
       </div>
 
-      <!-- CENTER COLUMN: Recent Games -->
+      <!-- CENTER COLUMN: Last Survey Recommendations -->
       <div class="center">
-        <h3 class="column-title">Juegos Recientes</h3>
-        <ng-container *ngIf="vm.profile?.recentGames as recentGames; else noRecentGames">
-          <div class="recommended-item" *ngFor="let game of recentGames"
-               (click)="navigateToRecentGame(game)" [class.is-navigating]="navigating()">
-            <img [src]="game.image" [alt]="game.title" />
+        <h3 class="column-title">Última Recomendación</h3>
+        <ng-container *ngIf="recommendedGames().length > 0; else noRecommendations">
+          <div class="recommended-item" *ngFor="let game of recommendedGames()"
+               (click)="navigateToRecommendedGame(game)" [class.is-navigating]="navigating()">
+            <img [src]="game.img" [alt]="game.title"
+                 (error)="$any($event.target).src='https://placehold.co/80x80?text=N/A'" />
             <span>{{ game.title }}</span>
           </div>
         </ng-container>
-        <ng-template #noRecentGames>
+        <ng-template #noRecommendations>
           <div class="no-data-placeholder">
-            <p>No hay juegos recientes</p>
+            <p>Sin recomendaciones todavía</p>
+            <a routerLink="/back-log-slayer/survey" class="library-btn"
+               style="font-size:0.85rem; padding:8px 16px; margin-top:12px;">
+              Ir a la encuesta
+            </a>
           </div>
         </ng-template>
       </div>
@@ -102,15 +107,11 @@
               type="doughnut">
             </canvas>
           </div>
-          <div class="stats-total" *ngIf="vm.profile!.totalPlaytime > 0">
-            <span class="stats-total-label">Total jugado</span>
-            <span class="stats-total-value">{{ formatPlaytime(vm.profile!.totalPlaytime) }}</span>
-          </div>
           <div class="chart-legend">
             <div class="legend-item" *ngFor="let label of vm.profile!.statistics.labels; let i = index">
               <span class="legend-dot" [style.background]="getChartColor(vm.profile, i)"></span>
               <span class="legend-label">{{ label }}</span>
-              <span class="legend-value">{{ formatPlaytime(getChartValue(vm.profile, i)) }}</span>
+              <span class="legend-value">{{ getChartValue(vm.profile, i) }}&nbsp;<small>juegos</small></span>
             </div>
           </div>
         </ng-container>

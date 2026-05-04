@@ -7,6 +7,7 @@ import { Observable, of, catchError, startWith, map, tap, forkJoin } from 'rxjs'
 
 import { ProfileService, UserProfile } from '../../../games/services/profile.service';
 import { GamesService } from '../../../games/services/games.service';
+import { RecommendedGame, SurveyResponse, RECOMMENDATION_KEY } from '../../interfaces/survey.interface';
 
 export interface ProfileViewModel {
   loading: boolean;
@@ -32,6 +33,20 @@ export class ProfileComponent {
   uploading = signal(false);
   navigating = signal(false);
   avatarUrl = signal<string | null>(null);
+  recommendedGames = signal<RecommendedGame[]>(this.loadRecommendedGames());
+
+  private loadRecommendedGames(): RecommendedGame[] {
+    try {
+      const stored = localStorage.getItem(RECOMMENDATION_KEY);
+      if (!stored) return [];
+      const response: SurveyResponse = JSON.parse(stored);
+      const result: RecommendedGame[] = [];
+      if (response.mainRecommendation) result.push(response.mainRecommendation);
+      return [...result, ...response.secondaryRecommendations].slice(0, 5);
+    } catch {
+      return [];
+    }
+  }
 
   chartOptions: ChartOptions<'doughnut'> = {
     responsive: true,
@@ -79,7 +94,23 @@ export class ProfileComponent {
     });
   }
 
-  /** Navega al detalle de un juego recomendado con vista de catálogo (sin datos de biblioteca) */
+  /** Navega al detalle de una recomendación de encuesta */
+  navigateToRecommendedGame(game: RecommendedGame): void {
+    if (this.navigating()) return;
+    this.navigating.set(true);
+
+    this.gamesService.getGame(game.id).subscribe({
+      next: (fullGame) => {
+        this.navigating.set(false);
+        this.router.navigate(['/back-log-slayer/game-detail'], {
+          state: { game: fullGame, from: 'profile' }
+        });
+      },
+      error: () => { this.navigating.set(false); }
+    });
+  }
+
+  /** Navega al detalle de un juego reciente con vista de catálogo (sin datos de biblioteca) */
   navigateToRecentGame(game: UserProfile['recentGames'][number]): void {
     if (this.navigating()) return;
     this.navigating.set(true);

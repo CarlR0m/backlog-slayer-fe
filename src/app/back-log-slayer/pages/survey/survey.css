@@ -1,139 +1,196 @@
-.survey-container {
-    width: 70%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
-    align-items: center;
-    min-height: 85vh;
+.survey-wrapper {
+  min-height: calc(100vh - 62px);
+  padding: 2rem 1rem;
 }
 
-.form-container {
-    width: 100%;
-    min-height: 85vh;
-    margin-top: 5%;
-    padding: 5%;
-    background-color: #252525ee;
-    border-radius: 12px;
+.survey-card {
+  background: rgba(28, 28, 28, 0.96);
+  border-radius: 20px;
+  padding: 2.5rem 3rem;
+  max-width: 920px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-h2 {
-    font-family: 'Baskervville', serif;
-    color: #fff;
-    font-size: 1.5rem;
+/* Paso actual */
+.step-counter {
+  color: #777;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.hr-line {
-    margin: auto;
-    width: 100%;
-    height: 5px;
-    margin-top: -20px;
-    background:
-        linear-gradient(25deg, transparent 12px, #ffffff 0) left,
-        linear-gradient(-25deg, transparent 12px, #ffffff 0) right;
-    background-size: 50% 100%;
-    background-repeat: no-repeat;
-    border: none;
+/* Título de la pregunta */
+.survey-question {
+  font-family: 'Baskervville SC', serif;
+  font-size: 1.85rem;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 0.6rem;
+  line-height: 1.3;
 }
 
-.step {
-    display: none;
-    text-align: center;
-    transition: transform 1s ease, opacity 1s ease;
-    opacity: 0;
-    transform: scale(0.95);
+/* Divisor decorativo */
+.survey-divider {
+  width: 56px;
+  height: 3px;
+  background: #4a90e2;
+  border-radius: 2px;
+  margin: 0 auto 2rem;
 }
 
-.step.active {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 20px;
-    opacity: 1;
-    transform: scale(1);
+/* ── Grid de opciones ── */
+.options-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 2rem;
 }
 
-.survey-row {
-    display: contents;
+.options-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
 }
 
-.nav {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    background-color: #252525ee;
-    transition: transform 0.2s, background-color 0.2s;
-    min-width: 50%;
-    min-height: 50%;
+.options-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.nav:hover:not(:disabled) {
-    transform: scale(1.05);
-    background-color: #e0e0e0;
-    color: black;
+.options-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.nav:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.options-grid--5 {
+  grid-template-columns: repeat(5, 1fr);
 }
 
-.nav.prev {
-    justify-self: start;
-    margin-right: 0;
+/* Botón de opción */
+.option-btn {
+  aspect-ratio: 1 / 0.62;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
+  color: #ccc;
+  font-family: 'Baskervville', serif;
+  font-size: 0.93rem;
+  padding: 0.6rem 0.4rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.35;
 }
 
-.nav.next {
-    justify-self: end;
-    margin-left: 0;
+.option-btn:hover {
+  background: rgba(74, 144, 226, 0.14);
+  border-color: #4a90e2;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.18);
 }
 
-.step h2 {
-    margin: 0;
-    font-size: 2rem;
+.option-btn.selected {
+  background: rgba(74, 144, 226, 0.28);
+  border-color: #4a90e2;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.22);
 }
 
-/* Grid de botones */
-.options {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* 3 columnas desktop */
-    gap: 15px;
+/* ── Barra de navegación inferior ── */
+.survey-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-.options button {
-    aspect-ratio: 1 / 0.7;
-    /* siempre cuadrado */
-    font-size: 1rem;
-    padding: 0;
-    border: 2px solid #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    width: 100%;
-    white-space: pre-line;
-    /* será controlado por el grid */
-    box-sizing: border-box;
+.nav-btn-prev {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  flex-shrink: 0;
 }
 
-.options button:hover {
-    transform: scale(1.05);
+.nav-btn-prev:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+  transform: scale(1.08);
 }
 
-.options button.selected {
-    background-color: #333;
-    color: #fff;
+.nav-btn-prev:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
 }
 
-.mi-linea {
-    margin-top: -20px;
-    width: 100%;
-    max-width: 500px;
-    height: 5px;
-    background-color: black;
-    border: none;
-    margin-left: auto;
-    margin-right: auto;
+.nav-btn-action,
+.nav-btn-confirm {
+  background: #4a90e2;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Baskervville', serif;
+  font-size: 0.97rem;
+  padding: 0.65rem 1.75rem;
+  cursor: pointer;
+  transition: background-color 0.18s, transform 0.18s;
+  letter-spacing: 0.02em;
+}
+
+.nav-btn-action:hover {
+  background: #357abd;
+  transform: translateY(-1px);
+}
+
+.nav-btn-confirm {
+  background: linear-gradient(135deg, #4a90e2 0%, #6c5ce7 100%);
+}
+
+.nav-btn-confirm:hover {
+  background: linear-gradient(135deg, #357abd 0%, #5b4de0 100%);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .survey-card {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .survey-question {
+    font-size: 1.45rem;
+  }
+
+  .options-grid--5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .survey-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .options-grid--3,
+  .options-grid--4,
+  .options-grid--5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .option-btn {
+    aspect-ratio: auto;
+    min-height: 58px;
+  }
 }

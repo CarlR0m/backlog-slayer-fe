@@ -1,37 +1,48 @@
-<div class="survey-container">
-  <button class="nav prev" (click)="prevStep()" [disabled]="step === 0">
-    <i class="bi bi-caret-left-fill"></i>
-  </button>
+<div class="survey-wrapper d-flex align-items-center justify-content-center py-5">
+  <div class="survey-card w-100">
 
-  <div class="form-container">
-    <div class="step active">
-      <h2>
-        {{
-        steps[step].dynamic
-        ? getTagQuestion()
-        : steps[step].question
-        }}
-      </h2>
+    <!-- Indicador de paso -->
+    <div class="d-flex justify-content-end mb-2">
+      <span class="step-counter">{{ step + 1 }} / {{ steps.length }}</span>
+    </div>
 
-      <div class="hr-line"></div>
+    <!-- Pregunta -->
+    <h2 class="survey-question">
+      {{ steps[step].dynamic ? getTagQuestion() : steps[step].question }}
+    </h2>
+    <div class="survey-divider"></div>
 
-      <div class="options">
-        <button *ngFor="let option of (steps[step].dynamic ? getTagOptions() : steps[step].options)"
-          (click)="selectOption(steps[step].controlName, option)"
-          [class.selected]="steps[step].dynamic
-            ? isTagSelected(option.value)
-            : form.get(steps[step].controlName)?.value === option.value">
-          {{ option.label }}
-        </button>
+    <!-- Grid de opciones -->
+    <div [ngClass]="getOptionsGridClass()">
+      <button
+        class="option-btn"
+        *ngFor="let option of (steps[step].dynamic ? getTagOptions() : steps[step].options)"
+        (click)="selectOption(steps[step].controlName, option)"
+        [class.selected]="steps[step].dynamic
+          ? isTagSelected(option.value)
+          : form.get(steps[step].controlName)?.value === option.value">
+        {{ option.label }}
+      </button>
+    </div>
+
+    <!-- Navegación inferior -->
+    <div class="survey-nav">
+      <button class="nav-btn-prev" (click)="prevStep()" [disabled]="step === 0" aria-label="Paso anterior">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div>
+        @if (step === 3) {
+          <button class="nav-btn-action" (click)="nextStep()">
+            Confirmar selección&nbsp;<i class="bi bi-arrow-right"></i>
+          </button>
+        } @else if (step === steps.length - 1) {
+          <button class="nav-btn-confirm" (click)="confirm()">
+            Ver mi recomendación&nbsp;<i class="bi bi-hand-thumbs-up-fill"></i>
+          </button>
+        }
       </div>
     </div>
+
   </div>
-
-  <button class="nav next" *ngIf="step === 3" (click)="nextStep()">
-    <i class="bi bi-caret-right-fill"></i>
-  </button>
-
-  <button class="nav next" *ngIf="step === steps.length - 1" (click)="confirm()">
-    <i class="bi bi-hand-thumbs-up-fill"></i>
-  </button>
 </div>

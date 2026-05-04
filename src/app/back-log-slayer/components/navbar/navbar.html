@@ -1,45 +1,55 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="/logo.png" alt="Backlog Slayer" style="height: 52px;">
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand py-0" routerLink="/back-log-slayer/survey">
+      <img src="/logo.png" alt="Backlog Slayer" style="height: 50px;">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav gap-1 ms-2">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/back-log-slayer/survey">Encuesta</a>
+          <a class="nav-link" routerLink="/back-log-slayer/survey"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            Inicio
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/back-log-slayer/all-games">Juegos</a>
+          <a class="nav-link" routerLink="/back-log-slayer/all-games" routerLinkActive="active">
+            Juegos
+          </a>
         </li>
         @if (authService.authStatus() === 'authenticated') {
           <li class="nav-item">
-              <a class="nav-link" routerLink="/back-log-slayer/games-library">Mi Biblioteca</a>
+            <a class="nav-link" routerLink="/back-log-slayer/games-library" routerLinkActive="active">
+              Mi Biblioteca
+            </a>
           </li>
         }
         <li class="nav-item">
-          <a class="nav-link" role="button" style="cursor:pointer;" data-bs-toggle="modal"
-            data-bs-target="#gameImportModal">Importar</a>
+          <a class="nav-link" role="button" style="cursor:pointer;"
+            data-bs-toggle="modal" data-bs-target="#gameImportModal">
+            Importar
+          </a>
         </li>
       </ul>
     </div>
+
     @if(authService.authStatus() === 'authenticated') {
-    <div class="d-flex align-items-center gap-2">
-      <a class="nav-link text-white" routerLink="/back-log-slayer/profile">
-        Hola {{ authService.user()?.username }}
-      </a>
-      <button class="btn btn-sm btn-outline-light" (click)="logout()" title="Cerrar sesión">
-        <i class="bi bi-box-arrow-right"></i>
-      </button>
-    </div>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <a class="nav-link text-white user-greeting" routerLink="/back-log-slayer/profile">
+          <i class="bi bi-person-circle me-1"></i>{{ authService.user()?.username }}
+        </a>
+        <button class="btn btn-sm btn-outline-light" (click)="logout()" title="Cerrar sesión">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      </div>
     } @else if (authService.authStatus() === 'not-authenticated') {
-    <div class="d-flex align-items-center gap-2">
-      <a class="btn btn-sm btn-outline-light" routerLink="/auth/login">Iniciar Sesión</a>
-      <a class="btn btn-sm btn-primary" routerLink="/auth/register">Registrarse</a>
-    </div>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <a class="btn btn-sm btn-outline-light" routerLink="/auth/login">Iniciar Sesión</a>
+        <a class="btn btn-sm btn-primary" routerLink="/auth/register">Registrarse</a>
+      </div>
     }
   </div>
 </nav>

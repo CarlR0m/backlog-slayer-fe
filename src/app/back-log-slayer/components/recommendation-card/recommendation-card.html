@@ -1,60 +1,69 @@
-<div class="card border-0 shadow-sm">
+<div class="rec-card">
 
-  <h1 class="text-center pt-4 mb-0">El juego elegido es...</h1>
+  <h1 class="rec-heading text-center pt-4 mb-0">El juego elegido es...</h1>
 
   <div class="row g-0">
 
     <!-- Imagen del juego -->
     <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
-      <img [src]="game().img" [alt]="game().title" class="rounded shadow cover-img"
+      <img [src]="game().img" [alt]="game().title" class="cover-img rounded shadow"
         (error)="$any($event.target).src='https://placehold.co/300x450?text=' + game().title" />
     </div>
 
     <!-- Detalles del juego -->
     <div class="col-md-8">
-      <div class="card-body d-flex flex-column h-100 py-4 px-4 gap-3">
+      <div class="d-flex flex-column h-100 py-4 px-4 gap-3">
 
-        <!-- Titulo del juego -->
-        <h2 class="fw-bold mb-0">{{ game().title }}</h2>
+        <!-- Título -->
+        <h2 class="rec-title mb-0">{{ game().title }}</h2>
 
-        <!-- Descripcion -->
-        <p class="text-muted mb-0 game-description">
+        <!-- Descripción -->
+        <p class="rec-description mb-0">
           {{ game().description }}
         </p>
 
-        <!-- Generos -->
+        <!-- Géneros -->
         @if (game().genders && game().genders!.length > 0) {
-        <div class="d-flex flex-wrap gap-1">
-          @for (gender of game().genders!; track gender.id) {
-          <span class="badge bg-secondary">{{ gender.name }}</span>
-          }
-        </div>
+          <div class="d-flex flex-wrap gap-1">
+            @for (gender of game().genders!; track gender.id) {
+              <span class="rec-badge">{{ gender.name }}</span>
+            }
+          </div>
         }
 
-        <!-- Informacion del juego -->
+        <!-- Metadatos -->
         <ul class="list-unstyled mb-0 d-flex flex-column gap-1">
           <li>
             <small>
-              <strong>Plataformas:</strong>
-              {{ game().platforms.map(p => p.name).join(', ') }}
+              <span class="rec-meta-label">Plataformas:</span>
+              <span class="rec-meta-value">{{ game().platforms.map(p => p.name).join(', ') }}</span>
             </small>
           </li>
-          <li><small><strong>Tiempo de juego:</strong> {{ game().tiempojugado }}</small></li>
-          <li><small><strong>Puntuación:</strong> {{ game().score }}</small></li>
+          <li>
+            <small>
+              <span class="rec-meta-label">Tiempo de juego:</span>
+              <span class="rec-meta-value">{{ game().tiempojugado }}</span>
+            </small>
+          </li>
+          <li>
+            <small>
+              <span class="rec-meta-label">Puntuación:</span>
+              <span class="rec-meta-value">{{ game().score }}</span>
+            </small>
+          </li>
         </ul>
 
-        <!-- Botones de acciones-->
+        <!-- Acciones -->
         <div class="d-flex justify-content-between align-items-end mt-auto">
-          <button type="button" class="btn btn-link btn-sm text-muted p-0 text-decoration-none"
-            (click)="goSurvey.emit()">
-            Volver a la encuesta
+          <button type="button" class="rec-back-btn" (click)="goSurvey.emit()">
+            <i class="bi bi-arrow-left me-1"></i>Volver a la encuesta
           </button>
           <div class="d-flex flex-column align-items-end gap-2">
             <a [href]="game().store_url" target="_blank" rel="noopener noreferrer"
               class="btn btn-primary btn-sm px-4">
-              Jugar
+              <i class="bi bi-steam me-1"></i>Jugar
             </a>
-            <button type="button" class="btn btn-primary btn-sm px-4" (click)="goOtherGames.emit()">
+            <button type="button" class="btn btn-outline-light btn-sm px-4" (click)="goOtherGames.emit()">
               Otras recomendaciones
             </button>
           </div>

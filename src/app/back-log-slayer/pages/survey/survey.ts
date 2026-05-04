@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SurveyResponse, RECOMMENDATION_KEY } from '../../interfaces/survey.interface';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-survey',
@@ -297,10 +298,21 @@ export class Survey {
     }
   }
 
+  getOptionsGridClass(): string {
+    const options = this.steps[this.step].dynamic
+      ? this.getTagOptions()
+      : this.steps[this.step].options;
+    const count = options.length;
+    if (count <= 2) return 'options-grid options-grid--2';
+    if (count <= 3) return 'options-grid options-grid--3';
+    if (count > 12) return 'options-grid options-grid--5';
+    return 'options-grid options-grid--4';
+  }
+
   confirm() {
     const payload = this.form.value;
 
-    this.http.post<SurveyResponse>('http://127.0.0.1:8000/api/recommendations/survey', payload)
+    this.http.post<SurveyResponse>(`${environment.api.url}/recommendations/survey`, payload)
       .subscribe({
         next: (response) => {
           console.log('Respuesta API:', response);
