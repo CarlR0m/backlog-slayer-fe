@@ -1,5 +1,0 @@
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/backlog-slayer-fe/browser",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
