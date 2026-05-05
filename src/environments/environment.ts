@@ -4,6 +4,6 @@ export const environment = {
     logo: '',
   },
   api: {
-    url: 'https://backlog-slayer-production.up.railway.app/api',
+    url: 'https://backlog-slayer-production-e042.up.railway.app/api',
   }
 };
