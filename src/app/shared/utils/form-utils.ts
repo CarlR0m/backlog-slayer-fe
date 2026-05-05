@@ -36,7 +36,7 @@ export const setServerErrors = (form: FormGroup, serverErrorResponses: any) => {
   });
 };
 
-export const SERVER_ERROR_MESSAGE = 'Error de servidor o conexión. Por favor, prueba en otro momento.';
+export const SERVER_ERROR_MESSAGE = 'Error de conexión. Inténtalo más tarde.';
 
 export const getApiErrorMsg = (error: any): string => {
   if (error.status === 0 || error.status >= 500 || error?.error?.exception) {

@@ -17,7 +17,9 @@
 
         @if (isLoadingPlatforms()) {
         <div class="my-5">
-          <div class="spinner-border text-primary" role="status"></div>
+          <div class="spinner-border text-primary" role="status">
+          </div>
+          <p class="text-muted mt-3">Cargando plataformas...</p>
         </div>
         } @else {
         <div class="row g-3 justify-content-center mt-2">
@@ -27,6 +29,8 @@
               <span class="fw-bold mt-2">{{ platform.name }}</span>
             </button>
           </div>
+          } @empty {
+          <p class="text-muted mt-3">{{errorMessage()}}</p>
           }
         </div>
         }

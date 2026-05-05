@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PlatformService } from '../../services/platform.service';
 import { SteamService } from '../../services/steam.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -15,14 +16,13 @@ export class GameImportModal implements OnInit {
   private platformService = inject(PlatformService);
   private steamService = inject(SteamService);
   private form = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   platformsList = signal<Platform[]>([]);
   isLoadingPlatforms = signal(true);
   currentStep = signal<ModalStep>('select_platform');
   selectedPlatform = signal<Platform | null>(null);
   errorMessage = signal<string>('');
-  //Pediente de borrar
-  gamesCount = signal<number>(0);
 
   importForm = this.form.group({ platformUserId: [''] });
 
@@ -40,7 +40,7 @@ export class GameImportModal implements OnInit {
         this.isLoadingPlatforms.set(false);
       },
       error: () => {
-        this.errorMessage.set('Error al cargar las plataformas. Inténtalo más tarde.');
+        this.errorMessage.set('No se han podido cargar las plataformas. Inténtalo más tarde.');
         this.isLoadingPlatforms.set(false);
       }
     });
@@ -60,20 +60,23 @@ export class GameImportModal implements OnInit {
     }
   }
   private handleSteamRedirect() {
-    this.steamService.getSteamAuthUrl().subscribe({
-      next: (response) => {
-        window.location.href = response.url;
-      },
-      error: () => {
-        this.errorMessage.set('No se pudo conectar con Steam. Inténtalo más tarde.');
-        this.currentStep.set('error');
-      }
-    });
+    this.steamService.getSteamAuthUrl()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+          window.location.href = response.url;
+        },
+        error: () => {
+          this.errorMessage.set('No se pudo conectar con Steam. Inténtalo más tarde.');
+          this.currentStep.set('error');
+        }
+      });
   }
 
   goBack() {
     this.currentStep.set('select_platform');
     this.selectedPlatform.set(null);
+    this.errorMessage.set('');
     this.importForm.reset();
   }
 

@@ -23,7 +23,7 @@ export class SteamCallBack implements OnInit {
     if (steamStatus === 'success') {
       this.executeSync();
     } else {
-      this.errorMessage.set(reason || 'La autenticación falló.');
+      this.errorMessage.set('La autenticación ha fallado.');
       this.status.set('error');
     }
   }
@@ -33,9 +33,8 @@ export class SteamCallBack implements OnInit {
         this.stats.set(response.stats);
         this.status.set('success');
       },
-      error: (err) => {
-        this.errorMessage.set(err.error?.message || 'Error al sincronizar.');
-        console.error('Error de sincronización con Steam:', err);
+      error: () => {
+        this.errorMessage.set('Error al sincronizar.');
         this.status.set('error');
       }
     });
@@ -44,7 +43,7 @@ export class SteamCallBack implements OnInit {
     this.router.navigateByUrl('/back-log-slayer/games-library');
   }
   goToHome() {
-    this.router.navigateByUrl('/back-log-slayer/prueba');
+    this.router.navigateByUrl('/back-log-slayer/survey');
   }
 }
 
