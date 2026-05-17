@@ -7,23 +7,29 @@
     </div>
 
     <!-- Pregunta -->
-    <h2 class="survey-question">
-      {{ steps[step].dynamic ? getTagQuestion() : steps[step].question }}
-    </h2>
-    <div class="survey-divider"></div>
+    <div class="text-center mb-0">
+      <h2 class="survey-question">
+        {{ steps[step].dynamic ? getTagQuestion() : steps[step].question }}
+        <span class="survey-divider"></span>
+      </h2>
+    </div>
 
     <!-- Grid de opciones -->
     <div [ngClass]="getOptionsGridClass()">
-      <button
-        class="option-btn"
-        *ngFor="let option of (steps[step].dynamic ? getTagOptions() : steps[step].options)"
-        (click)="selectOption(steps[step].controlName, option)"
-        [class.selected]="steps[step].dynamic
+      <button class="option-btn" *ngFor="let option of (steps[step].dynamic ? getTagOptions() : steps[step].options)"
+        (click)="selectOption(steps[step].controlName, option)" [class.selected]="steps[step].dynamic
           ? isTagSelected(option.value)
           : form.get(steps[step].controlName)?.value === option.value">
         {{ option.label }}
       </button>
     </div>
+
+    @if (step === 0 && libraryWarning()) {
+    <div class="alert alert-warning d-flex align-items-start gap-2 mt-2" role="alert">
+      <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1"></i>
+      <span>{{ libraryWarning() }}</span>
+    </div>
+    }
 
     <!-- Navegación inferior -->
     <div class="survey-nav">
@@ -33,13 +39,13 @@
 
       <div>
         @if (step === 3) {
-          <button class="nav-btn-action" (click)="nextStep()">
-            Confirmar selección&nbsp;<i class="bi bi-arrow-right"></i>
-          </button>
+        <button class="nav-btn-action" (click)="nextStep()">
+          Confirmar selección&nbsp;<i class="bi bi-arrow-right"></i>
+        </button>
         } @else if (step === steps.length - 1) {
-          <button class="nav-btn-confirm" (click)="confirm()">
-            Ver mi recomendación&nbsp;<i class="bi bi-hand-thumbs-up-fill"></i>
-          </button>
+        <button class="nav-btn-confirm" (click)="confirm()">
+          Ver mi recomendación&nbsp;<i class="bi bi-hand-thumbs-up-fill"></i>
+        </button>
         }
       </div>
     </div>
