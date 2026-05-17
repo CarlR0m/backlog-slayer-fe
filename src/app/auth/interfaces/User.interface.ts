@@ -6,9 +6,9 @@
  * @property {User} user - Usuario autenticado
  */
 export interface UserResponse {
-  message:      string;
+  message: string;
   access_token: string;
-  user:         User;
+  user: User;
 }
 
 /**
@@ -21,10 +21,11 @@ export interface UserResponse {
  * @property {string} [role] - Rol del usuario
  */
 export interface User {
-  id:        number;
-  username:  string;
-  email:     string;
+  id: number;
+  username: string;
+  email: string;
   steam_id?: string;
-  role?:     string;
+  role?: string;
+  has_games: boolean;
 }
 
