@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SurveyResponse, RECOMMENDATION_KEY } from '../../interfaces/survey.interface';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-survey',
@@ -16,6 +17,9 @@ import { environment } from '../../../../environments/environment';
 export class Survey {
   form: FormGroup;
   step: number = 0;
+  libraryWarning = signal<string | null>(null);
+
+  private authService = inject(AuthService);
 
   gameTypeOptionsMap: Record<string, { label: string; value: string }[]> = {
     puzzle: [
@@ -267,6 +271,23 @@ export class Survey {
       this.toggleTag(option);
       return;
     }
+
+    //Comprueba si el usuario esta logueado y si tiene juegos asociados
+    if (controlName === 'library' && option.value === '1') {
+      const status = this.authService.authStatus();
+      const user = this.authService.user();
+
+      if (status !== 'authenticated') {
+        this.libraryWarning.set('Debes iniciar sesión para elegir esta opción.');
+        return;
+      }
+      if (!user?.has_games) {
+        this.libraryWarning.set('No tienes juegos importados en tu biblioteca. Importa tus juegos o elige No para recibir una recomendación general.');
+        return;
+      }
+    }
+
+    this.libraryWarning.set(null);
 
     this.form.get(controlName)?.setValue(option.value);
 
