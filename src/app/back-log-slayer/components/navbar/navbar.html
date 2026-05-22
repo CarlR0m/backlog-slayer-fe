@@ -10,8 +10,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav gap-1 ms-2">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/back-log-slayer/survey"
-            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a class="nav-link" routerLink="/back-log-slayer/survey" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
             Inicio
           </a>
         </li>
@@ -21,35 +21,37 @@
           </a>
         </li>
         @if (authService.authStatus() === 'authenticated') {
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/back-log-slayer/games-library" routerLinkActive="active">
-              Mi Biblioteca
-            </a>
-          </li>
-        }
         <li class="nav-item">
-          <a class="nav-link" role="button" style="cursor:pointer;"
-            data-bs-toggle="modal" data-bs-target="#gameImportModal">
+          <a class="nav-link" routerLink="/back-log-slayer/games-library" routerLinkActive="active">
+            Mi Biblioteca
+          </a>
+        </li>
+        }
+        @if (authService.authStatus() === 'authenticated') {
+        <li class="nav-item">
+          <a class="nav-link" role="button" style="cursor:pointer;" data-bs-toggle="modal"
+            data-bs-target="#gameImportModal">
             Importar
           </a>
         </li>
+        }
       </ul>
     </div>
 
     @if(authService.authStatus() === 'authenticated') {
-      <div class="d-flex align-items-center gap-2 ms-auto">
-        <a class="nav-link text-white user-greeting" routerLink="/back-log-slayer/profile">
-          <i class="bi bi-person-circle me-1"></i>{{ authService.user()?.username }}
-        </a>
-        <button class="btn btn-sm btn-outline-light" (click)="logout()" title="Cerrar sesión">
-          <i class="bi bi-box-arrow-right"></i>
-        </button>
-      </div>
+    <div class="d-flex align-items-center gap-2 ms-auto">
+      <a class="nav-link text-white user-greeting" routerLink="/back-log-slayer/profile">
+        <i class="bi bi-person-circle me-1"></i>{{ authService.user()?.username }}
+      </a>
+      <button class="btn btn-sm btn-outline-light" (click)="logout()" title="Cerrar sesión">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
     } @else if (authService.authStatus() === 'not-authenticated') {
-      <div class="d-flex align-items-center gap-2 ms-auto">
-        <a class="btn btn-sm btn-outline-light" routerLink="/auth/login">Iniciar Sesión</a>
-        <a class="btn btn-sm btn-primary" routerLink="/auth/register">Registrarse</a>
-      </div>
+    <div class="d-flex align-items-center gap-2 ms-auto">
+      <a class="btn btn-sm btn-outline-light" routerLink="/auth/login">Iniciar Sesión</a>
+      <a class="btn btn-sm btn-primary" routerLink="/auth/register">Registrarse</a>
+    </div>
     }
   </div>
 </nav>
