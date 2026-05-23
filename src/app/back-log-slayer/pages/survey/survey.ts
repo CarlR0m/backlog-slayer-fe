@@ -261,6 +261,17 @@ export class Survey {
       puzzle: '¿Qué tipo de juego de puzles?',
       simulation: '¿Qué tipo de simulación?',
       fps: '¿Qué tipo de FPS?',
+      cardgame: '¿Qué tipo de juego de cartas?',
+      tabletop: '¿Qué tipo de juego de mesa?',
+      fighting: '¿Qué tipo de juego de lucha?',
+      turnbasedcombat: '¿Qué tipo de combate por turnos?',
+      automation: '¿Qué tipo de automatización?',
+      roguelike: '¿Qué tipo de roguelike?',
+      idle: '¿Qué tipo de juego ocioso?',
+      party: '¿Qué tipo de juego de fiesta?',
+      racing: '¿Qué tipo de juego de carreras?',
+      platformer: '¿Qué tipo de plataformas?',
+      visualnovel: '¿Qué tipo de novela visual?',
     };
 
     return map[selected] || '¿Qué tipo de juego quieres?';
